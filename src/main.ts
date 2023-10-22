@@ -14,7 +14,7 @@ const template = Handlebars.compile(`
     <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
   </a>
   <h1>Vite + TypeScript 
-    <a href="./src/pages/registration/index.html" class="">{{pepe}}</a>
+    <a href="/src/pages/registration/index.html" class="">{{pepe}}</a>
     <a href="./src/pages/authorization/index.html" class="">{{pepe}}</a>
   </h1>
   <div class="card">
@@ -25,8 +25,8 @@ const template = Handlebars.compile(`
   </p>
 </div>
 `);
-var context = { pepe: 'asdadas' };
-var html = template(context);
+const context = { pepe: 'asdadas' };
+const html = template(context);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = html
 
