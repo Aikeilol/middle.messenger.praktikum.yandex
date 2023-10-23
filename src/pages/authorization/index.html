@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.scss">
-  <title>Document</title>
+  <title>Авторизация</title>
 </head>
 
 <body>
   <div class="container">
     <div class="authorization">
-      <p class="authorization__title">
-        Вход
-      </p>
-      <form class="authorization__form" action="">
-        <input name="login" type="text" class="">
-        <input name="password" type="text" class="">
-        <button class="authorization__button">Авторизоватся</button>
+      <div class="authorization__title">
+        Авторизация
+      </div>
+      <form id="authorization__form" class="authorization__form" action="">
+        <div id="authorization__inputs" class="authorization__form__inputs">
+
+        </div>
+        <div id="authorization__button" class="authorization__form__button">
+
+        </div>
       </form>
     </div>
   </div>
 </body>
+
+<script type="module" src="../../modules/authorization/index.ts"></script>
 
 </html>

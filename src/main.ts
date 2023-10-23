@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg'
 import { setupCounter } from './counter'
 import * as Handlebars from 'handlebars'
 
-
 const template = Handlebars.compile(`
 <div>
   <a href="https://vitejs.dev" target="_blank">
