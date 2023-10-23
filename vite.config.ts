@@ -3,12 +3,7 @@ import { fileURLToPath } from 'url'
 import { resolve } from 'path';
 
 export default {
-  plugins: [handlebars({
-    partialDirectory: './src/partials',
-    context: {
-      title: 'Hello, world!',
-    },
-  })],
+  plugins: [handlebars()],
   build: {
     rollupOptions: {
       input: {

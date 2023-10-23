@@ -8,11 +8,11 @@ import { Link } from '../../components/Link';
 const authorizationInputs = document.querySelector("#authorization__inputs")
 const buttonContainer = document.querySelector("#authorization__button")
 
-const htmlArr: string[] = []
+const htmlArr: string[] = new Array(fields.length)
 
 const buttonResult = handlebarsCompiler(Button, { text: 'Войти' })
 const link = handlebarsCompiler(Link, {
-  text: 'Ещё не зарегистрированы?',
+  text: 'Ещё не зарегистрированы ?',
   href: '/src/pages/registration/index.html',
 })
 
