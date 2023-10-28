@@ -1,0 +1,31 @@
+.ChatHeader {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px #eaeaea solid;
+  width: 100%;
+  justify-content: space-between;
+  &__img {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background: #eaeaea;
+  }
+  &__menu {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 2px;
+    &__dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 100%;
+      background: #1c47be;
+    }
+  }
+}

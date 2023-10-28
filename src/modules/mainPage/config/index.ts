@@ -16,5 +16,9 @@ export const pages = [
   {
     text: '500',
     href: '/src/pages/500/index.html',
+  },
+  {
+    text: 'Чат',
+    href: '/src/pages/chat/index.html',
   }
 ]

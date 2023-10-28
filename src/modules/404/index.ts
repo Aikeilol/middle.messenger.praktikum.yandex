@@ -5,7 +5,7 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 
 const container = document.querySelector('#container')
 
-const error = handlebarsCompiler(ErrorsPage, {
+const error = handlebarsCompiler(ErrorsPage(), {
   number: '404',
   errorText: 'Не туда попали',
   text: 'Назад к чатам',

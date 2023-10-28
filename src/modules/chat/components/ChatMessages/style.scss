@@ -1,0 +1,9 @@
+.chat {
+  &__message-block {
+    width: 70%;
+    border-left: #EAEAEA 1px solid;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+  }
+}

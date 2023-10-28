@@ -1,0 +1,30 @@
+.ChatInput {
+  display: flex;
+  padding: 10px;
+  border-top: 1px #eaeaea solid;
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  &__img {
+    cursor: pointer;
+  }
+  &_input {
+    background: #eaeaea;
+    width: 100%;
+    border-radius: 30px;
+    padding: 10px 4px;
+  }
+  &__menu {
+    border-radius: 12px;
+    background: #eaeaea;
+    padding: 2px 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+    background: #3369f3;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
