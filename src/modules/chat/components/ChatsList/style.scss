@@ -1,3 +1,6 @@
+@import  '../../../../scss/colors.scss';
+
+
 .chat {
 
   &__list {
@@ -17,14 +20,14 @@
       width: 30px;
       height: 30px;
       border-radius: 100%;
-      background: #efefef;
+      background: $inputsColor;
       cursor: pointer;
     }
     &__chats {
       display: flex;
       flex-direction: column;
       overflow-y: scroll;
-      background: #1e1f22;
+      background: $mainBgColor;
     }
   }
 }

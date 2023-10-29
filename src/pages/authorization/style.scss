@@ -1,4 +1,5 @@
 @import "../../scss/resetDefault.scss";
+@import "../../scss/colors.scss";
 
 .container {
   display: flex;
@@ -6,5 +7,5 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background: #1e1f22;
+  background: $mainBgColor;
 }

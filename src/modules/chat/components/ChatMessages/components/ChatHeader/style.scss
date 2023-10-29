@@ -1,20 +1,22 @@
+@import '../../../../../../scss/colors.scss';
+
 .ChatHeader {
   display: flex;
   padding: 10px;
-  border-bottom: 1px #eaeaea solid;
+  border-bottom: 1px $bordersColor solid;
   width: 100%;
   justify-content: space-between;
   &__img {
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background: #eaeaea;
+    background: $inputsColor;
   }
   &__menu {
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background: #eaeaea;
+    background: $inputsColor;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +27,7 @@
       width: 4px;
       height: 4px;
       border-radius: 100%;
-      background: #1c47be;
+      background: $buttonsColor;
     }
   }
 }

@@ -1,9 +1,10 @@
 @import "../../scss/resetDefault.scss";
+@import "../../scss/colors.scss";
 
 .chat {
   display: flex;
   width: 100%;
   height: 100vh;
-  background: #1e1f22;
+  background: $mainBgColor;
   justify-content: space-between;
 }

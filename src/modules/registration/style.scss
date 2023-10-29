@@ -1,8 +1,9 @@
+@import '../../scss/colors.scss';
 .registration {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
+  color: $mainTextColor;
   background: rgba(0, 0, 0, 0.16);
   min-width: 520px;
   border-radius: 8px;
@@ -11,7 +12,7 @@
   &__title {
     padding: 20px;
     text-align: center;
-    border-bottom: #464c60 1px solid;
+    border-bottom: $bordersColor 1px solid;
     font-weight: 600;
     width: 100%;
   }

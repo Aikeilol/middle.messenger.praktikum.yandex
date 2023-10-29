@@ -1,7 +1,8 @@
+@import '../../../../scss/colors.scss';
 .chat {
   &__message-block {
     width: 70%;
-    border-left: #EAEAEA 1px solid;
+    border-left: $inputsColor 1px solid;
     display: flex;
     padding: 10px;
     flex-direction: column;

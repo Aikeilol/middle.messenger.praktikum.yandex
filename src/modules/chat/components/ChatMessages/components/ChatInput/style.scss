@@ -1,7 +1,9 @@
+@import '../../../../../../scss/colors.scss';
+
 .ChatInput {
   display: flex;
   padding: 10px;
-  border-top: 1px #eaeaea solid;
+  border-top: 1px $bordersColor solid;
   width: 100%;
   justify-content: space-between;
   gap: 10px;
@@ -9,21 +11,21 @@
     cursor: pointer;
   }
   &_input {
-    background: #eaeaea;
+    background: $inputsColor;
     width: 100%;
     border-radius: 30px;
     padding: 10px 4px;
   }
   &__menu {
     border-radius: 12px;
-    background: #eaeaea;
+    background: $inputsColor;
     padding: 2px 4px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2px;
-    background: #3369f3;
+    background: $buttonsColor;
     font-size: 12px;
     cursor: pointer;
   }

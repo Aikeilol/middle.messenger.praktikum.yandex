@@ -1,3 +1,5 @@
+@import '../../scss/colors.scss';
+
 .authorization {
   display: flex;
   flex-direction: column;
@@ -13,7 +15,7 @@
   &__title {
     padding: 20px;
     text-align: center;
-    border-bottom: #464c60 1px solid;
+    border-bottom: $bordersColor 1px solid;
     font-weight: 600;
     width: 100%;
   }

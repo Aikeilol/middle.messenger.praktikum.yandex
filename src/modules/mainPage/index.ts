@@ -3,17 +3,17 @@ import './style.scss'
 import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 
 const template = `
-<div>
-  <h1>
+  <li>
     <a href={{href}} class="">{{text}}</a>
-  </h1>
-</div>
+  </li>
 `
 
 
-const html = pages.map(page => {
+const links = `<ul> ${pages.map(page => {
   return handlebarsCompiler(template, { text: page.text, href: page.href })
-}).join('')
+}).join('')} </ul>`
+
+const html = `<nav>${links}</nav>`
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = html

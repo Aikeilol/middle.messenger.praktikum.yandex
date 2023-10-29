@@ -1,6 +1,8 @@
+@import '../../scss/colors.scss';
+
 .button {
   border-radius: 8px;
-  background: #1c47be;
+  background: $buttonsColor;
   padding: 8px 0;
   width: 100%;
 }
