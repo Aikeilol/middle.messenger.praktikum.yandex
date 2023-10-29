@@ -8,4 +8,3 @@ export const last = <T>(list: T[]) => {
   const length = list.length;
   return length ? list[length - 1] : undefined;
 }
-
