@@ -3,6 +3,7 @@ import { fields } from './config';
 import { Button } from '../../components/Button';
 import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../components/Link';
+import './style.scss'
 
 
 const registrationInputs = document.querySelector("#registration__inputs")

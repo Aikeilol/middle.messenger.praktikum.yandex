@@ -1,0 +1,50 @@
+.account-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 12px;
+  &__setting {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #EAEAEA;
+    font-size: 14px;
+    &_blue{
+      color: #1c47be;
+      cursor: pointer;
+    }
+    &_red{
+      color: #FF0000;
+      cursor: pointer;
+    }
+  }
+  &_input{
+    all: unset;
+    border:none;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: #1e1f22;
+    color: #EAEAEA;
+    text-align: end;
+  }
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
+  border-radius: 100%;
+  background: #eaeaea;
+}
+
+input[type="file"] {
+  display: none;
+}
