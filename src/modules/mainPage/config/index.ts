@@ -20,5 +20,9 @@ export const pages = [
   {
     text: 'Чат',
     href: '/src/pages/chat/index.html',
+  },
+  {
+    text: 'Настройки аккаунта',
+    href: '/src/pages/account/index.html',
   }
 ]
