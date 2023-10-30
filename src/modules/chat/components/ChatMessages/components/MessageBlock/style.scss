@@ -1,0 +1,26 @@
+.messageBlock {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 6px;
+  padding: 6px 0;
+  overflow-y: scroll;
+  &__message {
+    display: flex;
+    font-size: 14px;
+    &_color {
+      background: #d9d9d9;
+      padding: 10px;
+      border-radius: 12px;
+      color: #1e1e1e;
+      max-width: 46%;
+    }
+    &_left {
+      justify-content: flex-start;
+    }
+    &_right {
+      justify-content: flex-end;
+      text-align: end;
+    }
+  }
+}
