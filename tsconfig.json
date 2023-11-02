@@ -11,7 +11,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
