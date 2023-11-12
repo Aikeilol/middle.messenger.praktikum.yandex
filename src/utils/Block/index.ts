@@ -1,118 +1,145 @@
-// import { EventBus } from "../EventBus";
+import { EventBus } from './../EventBus/index';
+import { meta, props } from './types/index';
 
-// // Нельзя создавать экземпляр данного класса
-// export class Block {
-//   static EVENTS = {
-//     INIT: "init",
-//     FLOW_CDM: "flow:component-did-mount",
-//     FLOW_RENDER: "flow:render"
-//   };
 
-//   _element = null;
-//   _meta = null;
+export class Block {
+  static EVENTS = {
+    INIT: "init",
+    FLOW_CDM: "flow:component-did-mount",
+    FLOW_CDU: "flow:component-did-update",
+    FLOW_RENDER: "flow:render"
+  };
 
-//   /** JSDoc
-//    * @param {string} tagName
-//    * @param {Object} props
-//    *
-//    * @returns {void}
-//    */
-//   constructor(tagName = "div", props = {}) {
-//     const eventBus = new EventBus();
+  _element: HTMLElement | null = null
+  _meta: meta | null = null
+  props: props
+  _isFirstRender: boolean = true
+  eventBus: () => InstanceType<typeof EventBus>
 
-//     this._meta = {
-//       tagName,
-//       props
-//     };
+  constructor(tagName = "div", props = {}) {
+    const eventBus = new EventBus();
+    this._meta = {
+      tagName,
+      props
+    };
 
-//     this.props = this._makePropsProxy(props);
+    this.props = this._makePropsProxy(props);
 
-//     this.eventBus = () => eventBus;
+    this.eventBus = () => eventBus;
 
-//     this._registerEvents(eventBus);
-//     eventBus.emit(Block.EVENTS.INIT);
-//   }
+    this._registerEvents(eventBus);
+    eventBus.emit(Block.EVENTS.INIT);
+  }
 
-//   _registerEvents(eventBus) {
-//     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-//     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-//     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-//   }
+  _registerEvents(eventBus: InstanceType<typeof EventBus>) {
+    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+  }
 
-//   _createResources() {
-//     const { tagName } = this._meta;
-//     this._element = this._createDocumentElement(tagName);
-//   }
+  _createResources() {
+    const { tagName } = this._meta as meta;
+    this._element = this._createDocumentElement(tagName);
+  }
 
-//   init() {
-//     this._createResources();
-//     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-//   }
+  init() {
+    this._createResources();
 
-//   _componentDidMount() {
-//     this.componentDidMount();
-//   }
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  }
 
-//   componentDidMount(oldProps) {}
+  _componentDidMount() {
+    this.componentDidMount();
+  }
 
-//     dispatchComponentDidMount() {
-//         this._eventBus().emit(Block.EVENTS.FLOW_CDM);
-//     }
+  componentDidMount() {
 
-//   _componentDidUpdate(oldProps, newProps) {
-//     ...
-//   }
+  }
 
-//   componentDidUpdate(oldProps, newProps) {
-//     return true;
-//   }
+  dispatchComponentDidMount() {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
 
-//   setProps = nextProps => {
-//     if (!nextProps) {
-//       return;
-//     }
+  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
+    const response = this.componentDidUpdate(oldProps, newProps);
+    if (!response) {
+      return;
+    }
+    this._render();
+  }
 
-//     Object.assign(this.props, nextProps);
-//   };
+  componentDidUpdate(oldProps?: unknown, newProps?: unknown) {
+    return true;
+  }
 
-//   get element() {
-//     return this._element;
-//   }
+  setProps = (nextProps: props) => {
+    if (!nextProps) {
+      return;
+    }
 
-//   _render() {
-//     const block = this.render();
-//     // Это небезопасный метод для упрощения логики
-//     // Используйте шаблонизатор из npm или напишите свой безопасный
-//     // Нужно компилировать не в строку (или делать это правильно),
-//     // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
-//     this._element.innerHTML = block;
-//   }
+    Object.assign(this.props, nextProps);
+  };
 
-//     // Переопределяется пользователем. Необходимо вернуть разметку
-//   render() {}
+  get element() {
+    return this._element;
+  }
 
-//   getContent() {
-//     return this.element;
-//   }
+  _render() {
+    const block = this.render();
+    // Этот небезопасный метод для упрощения логики
+    // Используйте шаблонизатор из npm или напишите свой безопасный
+    // Нужно не в строку компилировать (или делать это правильно),
+    // либо сразу в DOM-элементы возвращать из compile DOM-ноду
+    this._element!.innerHTML = String(block);
+    if(this._isFirstRender){
+      this.dispatchComponentDidMount()
+      this._isFirstRender = false
+    }
+  }
 
-//   _makePropsProxy(props) {
-//     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-//     const self = this;
+  render() {
+    return ''
+  }
 
-//         // Здесь вам предстоит реализовать метод
-//     return props;
-//   }
+  getContent() {
+    return this.element as HTMLElement;
+  }
 
-//   _createDocumentElement(tagName) {
-//     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-//     return document.createElement(tagName);
-//   }
+  _makePropsProxy(props: props) {
+    // Можно и так передать this
+    // Такой способ больше не применяется с приходом ES6+
+    const self = this;
 
-//   show() {
-//     this.getContent().style.display = "block";
-//   }
+    return new Proxy(props, {
+      get(target, prop) {
+        const value = target[prop];
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+      set(target, prop, value) {
+        target[prop] = value;
 
-//   hide() {
-//     this.getContent().style.display = "none";
-//   }
-// }
+        // Запускаем обновление компоненты
+        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        return true;
+      },
+      deleteProperty() {
+        throw new Error("Нет доступа");
+      }
+    });
+  }
+
+  _createDocumentElement(tagName: meta['tagName']) {
+    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+    return document.createElement(tagName);
+  }
+
+  show() {
+    this.getContent()!.style.display = "block";
+  }
+
+  hide() {
+    this.getContent()!.style.display = "none";
+  }
+}
