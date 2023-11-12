@@ -69,8 +69,8 @@ export class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps?: unknown, newProps?: unknown) {
-    return true;
+  componentDidUpdate(_oldProps?: unknown, _newProps?: unknown) {
+    return true
   }
 
   setProps = (nextProps: props) => {
@@ -92,7 +92,7 @@ export class Block {
     // Нужно не в строку компилировать (или делать это правильно),
     // либо сразу в DOM-элементы возвращать из compile DOM-ноду
     this._element!.innerHTML = String(block);
-    if(this._isFirstRender){
+    if (this._isFirstRender) {
       this.dispatchComponentDidMount()
       this._isFirstRender = false
     }
