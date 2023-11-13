@@ -3,9 +3,9 @@
 export const validation = (name: string, value: string) => {
 
   if (name === 'first_name' || name === 'second_name') {
-    const validatedValue = value.match(/^[A-Za-zА-яЁё][A-Za-zа-яёё][-]*[A-Za-zа-яё]+$/u)
+    const validatedValue = value.match(/^[A-ZА-ЯЁ]+([A-Za-zА-яЁё]|-)+[A-za-zа-яёё]+$/gu)
     if (validatedValue) {
-      return validatedValue[0].replace(/([a-zа-яё])/u, match => match.toUpperCase())
+      return validatedValue
     }
   }
 
@@ -14,6 +14,15 @@ export const validation = (name: string, value: string) => {
   }
 
   if (name === 'login') {
-    return value.match(/^(?=.{3,20}$)[a-za-zd_-]+(?<!\s)[-d][a-za-zd]*(?=[^\s-]|$)/)
+    return value.match(/^[a-zA-Z]*[0-9-]+$/i)
   }
+
+  if (name === 'password') {
+    return value.match(/^(?=\w*[A-Z])(?=\w*\d)\w{8,40}$/)
+  }
+
+  if (name === 'phone') {
+    return value.match(/(\+7|8)[0-9]{10,15}/ig)
+  }
+
 }

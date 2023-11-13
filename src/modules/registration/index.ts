@@ -17,9 +17,22 @@ class Registration extends Block {
 
     form?.addEventListener('submit', (event) => {
       event.preventDefault()
+      let isError = false
+      const formValue: Record<string, string> = {}
       inputs.forEach(input => {
-        console.log(input.name, input.value)
+        formValue[input.name] = input.value
+        if (!validation(String(input.name), String(input.value))) {
+          isError = true
+          input.classList.add('registration_error')
+          return
+        }
+        input.classList.remove('registration_error')
       })
+
+      if (!isError) {
+        console.log(formValue)
+      }
+
     })
 
     inputs.forEach(input => {
