@@ -36,24 +36,24 @@ class Registration extends Block {
     })
 
     inputs.forEach(input => {
-      input.addEventListener('blur', (event) => {
-        // @ts-ignore
-        if (!event.target?.value) {
+      input.addEventListener('blur', () => {
+
+        if (!input.value) {
           return null
         }
 
-        if (!('name' in event.target && 'value' in event.target)) {
+        if (!('name' in input && 'value' in input)) {
           return null
         }
-        const validatedValue = validation(String(event.target.name), String(event.target.value))
+        const validatedValue = validation(String(input.name), String(input.value))
         if (!validatedValue) {
-          // @ts-ignore
-          event.target.classList.add('registration_error')
+
+          input.classList.add('registration_error')
           return null
         }
-        // @ts-ignore
-        event.target.classList.remove('registration_error')
-        event.target.value = validatedValue
+
+        input.classList.remove('registration_error')
+        input.value = String(validatedValue)
       })
     })
   }

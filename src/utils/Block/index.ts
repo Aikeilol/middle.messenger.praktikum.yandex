@@ -69,8 +69,9 @@ export class Block {
     this._render();
   }
 
-  componentDidUpdate(_oldProps?: unknown, _newProps?: unknown) {
-    return true
+
+  componentDidUpdate(oldProps?: unknown, newProps?: unknown) {
+    return { oldProps, newProps }
   }
 
   setProps = (nextProps: props) => {
@@ -109,8 +110,7 @@ export class Block {
   _makePropsProxy(props: props) {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
-    const self = this;
-
+    const eventBus = this.eventBus
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop];
@@ -121,7 +121,7 @@ export class Block {
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty() {
