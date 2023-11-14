@@ -23,10 +23,10 @@ class Registration extends Block {
         formValue[input.name] = input.value
         if (!validation(String(input.name), String(input.value))) {
           isError = true
-          input.classList.add('registration_error')
+          input.classList.add('form_error')
           return
         }
-        input.classList.remove('registration_error')
+        input.classList.remove('form_error')
       })
 
       if (!isError) {
@@ -48,11 +48,11 @@ class Registration extends Block {
         const validatedValue = validation(String(input.name), String(input.value))
         if (!validatedValue) {
 
-          input.classList.add('registration_error')
+          input.classList.add('form_error')
           return null
         }
 
-        input.classList.remove('registration_error')
+        input.classList.remove('form_error')
         input.value = String(validatedValue)
       })
     })

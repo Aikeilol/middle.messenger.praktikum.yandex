@@ -1,7 +1,7 @@
 import { AccountDataForm } from "./components/AccountDataForm";
 
 
-const html = AccountDataForm()
+const accountDataForm = new AccountDataForm('form')
 
 
-document.querySelector<HTMLDivElement>('#account')!.innerHTML = html
+document.querySelector<HTMLDivElement>('#account')?.append(accountDataForm.getContent()) 

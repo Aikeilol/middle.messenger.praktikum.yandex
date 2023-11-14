@@ -1,3 +1,4 @@
+import './style.scss'
 
 type props = {
   name: string
