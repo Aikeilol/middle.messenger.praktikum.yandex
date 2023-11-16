@@ -88,10 +88,6 @@ export class Block {
 
   _render() {
     const block = this.render();
-    // Этот небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно не в строку компилировать (или делать это правильно),
-    // либо сразу в DOM-элементы возвращать из compile DOM-ноду
     this._element!.innerHTML = String(block);
     if (this._isFirstRender) {
       this.dispatchComponentDidMount()
@@ -108,8 +104,6 @@ export class Block {
   }
 
   _makePropsProxy(props: props) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
     const eventBus = this.eventBus
     return new Proxy(props, {
       get(target, prop) {
@@ -118,9 +112,6 @@ export class Block {
       },
       set(target, prop, value) {
         target[prop] = value;
-
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
         eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
@@ -131,7 +122,6 @@ export class Block {
   }
 
   _createDocumentElement(tagName: meta['tagName']) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 

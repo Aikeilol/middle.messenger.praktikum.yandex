@@ -1,4 +1,3 @@
-// const { headers = {}, method, data } = options;
 
 export enum METHODS {
   GET = 'GET',
