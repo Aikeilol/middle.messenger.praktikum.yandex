@@ -5,58 +5,18 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../components/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
-import { validation } from '../../utils/validation';
+import { addFormValidation } from '../../utils/validation';
 
 export class Authorization extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
     content.classList.add('authorization')
-    const form = content.querySelector("#authorization__form")
+    const form = content.querySelector("#authorization__form") as HTMLFormElement
     const inputs = content.querySelectorAll('input')
 
-    form?.addEventListener('submit', (event) => {
-      event.preventDefault()
-      let isError = false
-      const formValue: Record<string, string> = {}
-      inputs.forEach(input => {
-        formValue[input.name] = input.value
-        if (!validation(String(input.name), String(input.value))) {
-          isError = true
-          input.classList.add('form_error')
-          return
-        }
-        input.classList.remove('form_error')
-      })
-
-      if (!isError) {
-        console.log(formValue)
-      }
-
-    })
-
-    inputs.forEach(input => {
-      input.addEventListener('blur', () => {
-
-        if (!input.value) {
-          return null
-        }
-
-        if (!('name' in input && 'value' in input)) {
-          return null
-        }
-
-        const validatedValue = validation(String(input.name), String(input.value))
-        if (!validatedValue) {
-
-          input.classList.add('form_error')
-          return null
-        }
-
-        input.classList.remove('form_error')
-        input.value = String(validatedValue)
-      })
-    })
+    addFormValidation(form, inputs)
+    
   }
 
   render(): string {

@@ -24,10 +24,54 @@ export const validation = (name: string, value: string) => {
   if (name === 'phone') {
     return value.match(/(\+7|8)[0-9]{10,15}/ig)
   }
-  
 
-  if (name === 'display_name') {
+  if (name === 'display_name' || name === 'message') {
     return value
   }
 
+}
+
+export const addFormValidation = (form: HTMLFormElement, inputs: NodeListOf<HTMLInputElement>) => {
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault()
+    let isError = false
+    const formValue: Record<string, string> = {}
+    inputs.forEach(input => {
+      formValue[input.name] = input.value
+      if (!validation(String(input.name), String(input.value))) {
+        isError = true
+        input.classList.add('form_error')
+        return
+      }
+      input.classList.remove('form_error')
+    })
+
+    if (!isError) {
+      console.log(formValue)
+    }
+
+  })
+
+  inputs.forEach(input => {
+    input.addEventListener('blur', () => {
+
+      if (!input.value) {
+        return null
+      }
+
+      if (!('name' in input && 'value' in input)) {
+        return null
+      }
+
+      const validatedValue = validation(String(input.name), String(input.value))
+      if (!validatedValue) {
+
+        input.classList.add('form_error')
+        return null
+      }
+
+      input.classList.remove('form_error')
+      input.value = String(validatedValue)
+    })
+  })
 }
