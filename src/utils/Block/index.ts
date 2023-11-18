@@ -2,7 +2,7 @@ import { EventBus } from './../EventBus/index';
 import { meta, props } from './types/index';
 
 
-export class Block {
+export abstract class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -16,7 +16,7 @@ export class Block {
   _isFirstRender: boolean = true
   eventBus: () => InstanceType<typeof EventBus>
 
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName = "div", props: props = { props: {}, events: {} }) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
@@ -66,6 +66,7 @@ export class Block {
     if (!response) {
       return;
     }
+    this._removeEvents()
     this._render();
   }
 
@@ -86,6 +87,34 @@ export class Block {
     return this._element;
   }
 
+  _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach(eventName => {
+      if (eventName === 'blur') {
+        const inputs = this.getContent().querySelectorAll('input')
+        inputs.forEach(input => input.addEventListener(eventName, events[eventName]))
+        return
+      }
+
+      this.getContent().addEventListener(eventName, events[eventName]);
+    });
+  }
+
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach(eventName => {
+      if (eventName === 'blur') {
+        const inputs = this.getContent().querySelectorAll('input')
+        inputs.forEach(input => input.removeEventListener(eventName, events[eventName]))
+        return
+      }
+
+      this.getContent().removeEventListener(eventName, events[eventName]);
+    });
+  }
+
   _render() {
     const block = this.render();
     this._element!.innerHTML = String(block);
@@ -93,6 +122,7 @@ export class Block {
       this.dispatchComponentDidMount()
       this._isFirstRender = false
     }
+    this._addEvents()
   }
 
   render() {
@@ -107,11 +137,13 @@ export class Block {
     const eventBus = this.eventBus
     return new Proxy(props, {
       get(target, prop) {
-        const value = target[prop];
+        const targetType = target as props['events'] | props['props']
+        const value = targetType?.[prop]
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop, value) {
-        target[prop] = value;
+        const targetType = target as Required<props>['events'] | Required<props>['props']
+        targetType[prop] = value;
         eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },

@@ -1,32 +1,34 @@
-import { addFormValidation } from './../../../../utils/validation/index';
 import { Input } from '../../../../components/Input'
-import { Block } from '../../../../utils/Block'
 import { formInputs } from './config'
 import './style.scss'
+import { Block } from '../../../../utils/Block';
+import { inputValidation } from '../../../../utils/validation';
 
-export const AccountDataForm1 = () => {
-
-
-}
 
 export class AccountDataForm extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
     content.classList.add('account-settings')
-    const form: HTMLFormElement = content as HTMLFormElement
-    const inputs = content.querySelectorAll('input')
-    addFormValidation(form, inputs)
-
+    const allinputs = content.querySelectorAll('.account-settings__setting')
+    formInputs.map((input, i) => {
+      const htmlInput = new Input('input', {
+        props: input,
+        events: {
+          blur: inputValidation
+        }
+      }).getContent()
+      allinputs?.[i].append(htmlInput)
+    })
   }
 
   render(): string {
     const inputs = formInputs.map(input => {
+
       return (
         `
         <div class="account-settings__setting">
           <p class="">${input.title}</p>
-          ${Input(input)}
         </div>
         `
       )

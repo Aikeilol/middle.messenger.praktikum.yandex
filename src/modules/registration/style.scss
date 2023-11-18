@@ -8,7 +8,9 @@
   min-width: 520px;
   border-radius: 8px;
   gap: 10px;
-
+  max-width: 520px;
+  margin: 0 auto;
+  
   &__title {
     padding: 20px;
     text-align: center;
@@ -37,6 +39,4 @@
       margin-bottom: 10%;
     }
   }
-
-
 }

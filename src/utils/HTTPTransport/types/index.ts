@@ -6,10 +6,13 @@ export enum METHODS {
   DELETE = 'DELETE',
 }
 
+export type timeout = number
 
 export type httpOptions = {
   headers?: Record<string, string>
   method: METHODS,
   data: Record<string, unknown>,
-  timeout: number
+  timeout?: timeout
 }
+
+export type HTTPMethod = (url: string, options: httpOptions) => Promise<unknown>

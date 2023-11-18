@@ -1,14 +1,13 @@
+import { Block } from '../../utils/Block'
 import './style.scss'
+export class Input extends Block {
 
-type props = {
-  name: string
-  className: string
-  placeholder: string
-}
+  componentDidMount(): void {
+    const content = this.getContent()
+    content.setAttribute("name", String(this.props.props?.name))
+    content.setAttribute("placeholder", String(this.props.props?.placeholder))
+    content.setAttribute("type", 'text')
+    content.classList.add(String(this.props.props?.className))
+  }
 
-export const Input = ({ name, className, placeholder }: props) => {
-
-  return (
-    `<input name=${name} type='text' placeholder="${placeholder}" class=${className}>`
-  )
 }

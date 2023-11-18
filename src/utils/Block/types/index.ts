@@ -4,4 +4,7 @@ export type meta = {
   props: props
 }
 
-export type props = Record<symbol | string, unknown>
+export type props = {
+  props?: Record<symbol | string, unknown>
+  events?: Record<symbol | string, (event: Event) => void>
+}

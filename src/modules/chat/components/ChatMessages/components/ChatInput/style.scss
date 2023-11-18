@@ -16,6 +16,12 @@
     border-radius: 30px;
     padding: 10px 4px;
   }
+  &__container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
   &__menu {
     border-radius: 12px;
     background: $inputsColor;

@@ -1,4 +1,4 @@
-import { httpOptions, METHODS } from "./types";
+import { HTTPMethod, httpOptions, METHODS } from "./types";
 
 function queryStringify(data: httpOptions['data']) {
   if (typeof data !== 'object') {
@@ -11,24 +11,25 @@ function queryStringify(data: httpOptions['data']) {
 }
 
 export class HTTPTransport {
-  get = (url: string, options: httpOptions) => {
 
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+  get: HTTPMethod = (url, options) => {
+
+    return this.request(url, { ...options, method: METHODS.GET }, options?.timeout);
   };
 
-  post = (url: string, options: httpOptions) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post: HTTPMethod = (url, options) => {
+    return this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
   };
 
-  put = (url: string, options: httpOptions) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put: HTTPMethod = (url, options) => {
+    return this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
   };
 
-  delete = (url: string, options: httpOptions) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete: HTTPMethod = (url, options) => {
+    return this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
   };
 
-  request = (url: string, options: httpOptions, timeout = 5000) => {
+  request = (url: string, options?: httpOptions, timeout: number = 5000) => {
     const { headers = {}, method, data } = options || {};
 
     return new Promise(function (resolve, reject) {

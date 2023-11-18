@@ -1,4 +1,5 @@
-
+import { errorsText } from './errorsText'
+import './style.scss'
 
 export const validation = (name: string, value: string) => {
 
@@ -25,53 +26,62 @@ export const validation = (name: string, value: string) => {
     return value.match(/(\+7|8)[0-9]{10,15}/ig)
   }
 
-  if (name === 'display_name' || name === 'message') {
+  if (name === 'display_name' || name === 'message' || name === 'search') {
     return value
   }
 
 }
 
-export const addFormValidation = (form: HTMLFormElement, inputs: NodeListOf<HTMLInputElement>) => {
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault()
-    let isError = false
-    const formValue: Record<string, string> = {}
-    inputs.forEach(input => {
-      formValue[input.name] = input.value
-      if (!validation(String(input.name), String(input.value))) {
-        isError = true
-        input.classList.add('form_error')
-        return
-      }
-      input.classList.remove('form_error')
-    })
+export const inputValidation = (e: Event) => {
+  const input = e.target as HTMLInputElement
+  const validatedValue = validation(String(input.name), String(input.value))
+  const isAlreadyError = input.parentElement?.querySelector(`#error-message_${input.name}`)
+  if (!validatedValue && !isAlreadyError) {
+    const errorText = document.createElement('p')
+    errorText.setAttribute("id", `error-message_${input.name}`)
+    errorText.classList.add('error-message')
+    errorText.textContent = errorsText?.[input.name]
+    input.parentElement?.insertBefore(errorText, input)
+    input.classList.add('form_error')
+  }
+  if (validatedValue && isAlreadyError) {
+    input.parentElement?.removeChild(
+      input.parentElement.querySelector(`#error-message_${input.name}`) as Node
+    )
+    input.classList.remove('form_error')
+    input.value = String(validatedValue)
+  }
+}
 
-    if (!isError) {
-      console.log(formValue)
-    }
-
-  })
-
+export const formValidation = (event: Event) => {
+  event.preventDefault()
+  const eventTarget = event.target as Element
+  const inputs = eventTarget.querySelectorAll('input')
+  const formValue: Record<string, string> = {}
+  let isError = false
   inputs.forEach(input => {
-    input.addEventListener('blur', () => {
-
-      if (!input.value) {
-        return null
-      }
-
-      if (!('name' in input && 'value' in input)) {
-        return null
-      }
-
-      const validatedValue = validation(String(input.name), String(input.value))
-      if (!validatedValue) {
-
-        input.classList.add('form_error')
-        return null
-      }
-
+    formValue[input.name] = input.value
+    const validatedValue = validation(String(input.name), String(input.value))
+    const isAlreadyError = input.parentElement?.querySelector(`#error-message_${input.name}`)
+    if (!validatedValue) {
+      isError = true
+    }
+    if (!validatedValue && !isAlreadyError) {
+      const errorText = document.createElement('p')
+      errorText.setAttribute("id", `error-message_${input.name}`)
+      errorText.classList.add('error-message')
+      errorText.textContent = errorsText?.[input.name]
+      input.parentElement?.insertBefore(errorText, input)
+      input.classList.add('form_error')
+      return
+    }
+    if (validatedValue && isAlreadyError) {
+      input.parentElement?.removeChild(
+        input.parentElement.querySelector(`#error-message_${input.name}`) as Node)
       input.classList.remove('form_error')
-      input.value = String(validatedValue)
-    })
+    }
   })
+  if (!isError) {
+    console.log(formValue)
+  }
 }

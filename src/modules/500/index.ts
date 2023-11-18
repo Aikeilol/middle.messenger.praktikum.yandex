@@ -1,5 +1,5 @@
 
-import { ErrorsPage } from '../../components/ErrorsBlock';
+import { ErrorsPage } from '../../templates/ErrorsBlock';
 import { Block } from '../../utils/Block';
 import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 
