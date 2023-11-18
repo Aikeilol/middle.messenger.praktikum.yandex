@@ -1,4 +1,5 @@
 import { Block } from '../../../../utils/Block'
+import { formValidation } from '../../../../utils/validation'
 import { ChatHeader } from './components/ChatHeader'
 import { ChatInput } from './components/ChatInput'
 import { MessageBlock } from './components/MessageBlock'
@@ -9,7 +10,10 @@ export class ChatMessages extends Block {
   componentDidMount() {
     const chatHeader = new ChatHeader('div').getContent()
     const messageBlock = new MessageBlock('div').getContent()
-    const chatInput = new ChatInput('div').getContent()
+    const chatInput = new ChatInput('form', {
+      events:
+        { submit: formValidation }
+    }).getContent()
     this.getContent().classList.add('chat__message-block')
     this.getContent().append(chatHeader, messageBlock, chatInput)
   }
