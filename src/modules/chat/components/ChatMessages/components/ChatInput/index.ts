@@ -1,16 +1,41 @@
 import { Input } from '../../../../../../components/Input'
+import { Block } from '../../../../../../utils/Block'
+import { inputValidation } from '../../../../../../utils/validation'
 import addFile from './img/addFile.svg'
 import './style.scss'
 
-export const ChatInput = () => {
+export class ChatInput extends Block {
 
-  return (
-    `<div class="ChatInput">
-     <img class="ChatInput__img" src=${addFile} /> 
-     ${Input({ name: 'message', placeholder: "Наберите текст...", className: "ChatInput_input" })}
-    <div class="ChatInput__menu">
-        Отправить
-    </div>
-  </div>`
-  )
+  componentDidMount(): void {
+    const content = this.getContent()
+    content.classList.add('ChatInput')
+
+    const input = new Input('input', {
+      props: {
+        name: 'message',
+        placeholder: "Наберите текст...",
+        className: "ChatInput_input"
+      },
+      events: {
+        blur: inputValidation
+      }
+    }).getContent()
+
+    content.querySelector('.ChatInput__container')?.append(input)
+
+  }
+
+  render(): string {
+
+    return (
+      `
+      <img class="ChatInput__img" src=${addFile} />
+      <div class='ChatInput__container'></div>
+      <button class="ChatInput__menu" >
+      Отправить
+    </button>
+     `
+    )
+  }
+
 }

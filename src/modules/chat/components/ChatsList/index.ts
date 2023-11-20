@@ -1,23 +1,42 @@
 import { Input } from "../../../../components/Input"
-import { handlebarsCompiler } from "../../../../utils/handelbarsCompiler"
+import { Block } from "../../../../utils/Block"
+import { inputValidation } from "../../../../utils/validation"
 import { ChatItem } from "./components/ChatItem"
 import { chatItems } from "./config"
 import './style.scss'
 
 
-export const ChatsList = () => {
+export class ChatsList extends Block {
 
-  const chats = chatItems.map(item => handlebarsCompiler(ChatItem(), item)).join('')
 
-  return (`
-  <div class="chat__list">
+  componentDidMount() {
+    const content = this.getContent()
+    const input = new Input('input', {
+      props: {
+        name: 'search',
+        placeholder: "Поиск",
+        className: "search-input"
+      },
+      events: {
+        blur: inputValidation
+      }
+    }).getContent()
+    content.querySelector('.chat__list__search')?.append(input)
+    chatItems.forEach(item => {
+      const chatItem = new ChatItem('div', { props: item })
+      this.getContent().querySelector('.chat__list__chats')?.append(chatItem.getContent())
+    })
+  }
+
+  render(): string {
+    return (`
     <div class="chat__list__search">
-    <div class="chat__list__img"></div>
-      ${Input({name:'search', placeholder: "Поиск", className: "search-input"})}
+      <div class="chat__list__img"></div>
+
     </div>
-    <div class="chat__list__chats">
-      ${chats}
+    <div class="chat__list__chats" >
+
     </div>
-  </div>`
-  )
+  `)
+  }
 }

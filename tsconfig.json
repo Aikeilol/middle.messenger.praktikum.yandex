@@ -5,14 +5,13 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-
-    /* Linting */
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

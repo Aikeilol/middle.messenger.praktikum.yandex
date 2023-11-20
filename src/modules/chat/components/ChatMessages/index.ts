@@ -1,13 +1,20 @@
+import { Block } from '../../../../utils/Block'
+import { formValidation } from '../../../../utils/validation'
 import { ChatHeader } from './components/ChatHeader'
 import { ChatInput } from './components/ChatInput'
 import { MessageBlock } from './components/MessageBlock'
 import './style.scss'
 
-export const ChatMessages = () => {
+export class ChatMessages extends Block {
 
-  return (
-    `<div class="chat__message-block" >
-      ${ChatHeader() + MessageBlock() + ChatInput()}
-    </div>`
-  )
+  componentDidMount() {
+    const chatHeader = new ChatHeader('div').getContent()
+    const messageBlock = new MessageBlock('div').getContent()
+    const chatInput = new ChatInput('form', {
+      events:
+        { submit: formValidation }
+    }).getContent()
+    this.getContent().classList.add('chat__message-block')
+    this.getContent().append(chatHeader, messageBlock, chatInput)
+  }
 }
