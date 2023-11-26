@@ -19,4 +19,4 @@ export class Chat extends Block {
 
 }
 
-document.querySelector<HTMLDivElement>('#content')!.append(new Chat().getContent())
+// document.querySelector<HTMLDivElement>('#content')!.append(new Chat().getContent())

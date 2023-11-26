@@ -10,7 +10,7 @@ function isEqual(lhs: string, rhs: string) {
 
 function render(query: string, block: InstanceType<typeof Block>) {
   const root = document.querySelector(query);
-  root.textContent = block.getContent();
+  root?.append(block.getContent())
   return root;
 }
 
@@ -82,15 +82,17 @@ class Router {
     this._onRoute(window.location.pathname);
   }
 
-  _onRoute(pathname) {
+  _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
-
-    if (!route) {
+    console.log(route)
+    if (!route) { 
       return;
     }
+
     if (this._currentRoute) {
       this._currentRoute.leave()
     }
+
     this._currentRoute = route;
     route.render(route, pathname);
   }
@@ -108,7 +110,8 @@ class Router {
     this._onRoute(this.history.forward())
   }
 
-  getRoute(pathname) {
+  getRoute(pathname: string) {
+    console.log(this.routes)
     return this.routes.find(route => route.match(pathname));
   }
 }
@@ -116,7 +119,7 @@ class Router {
 
 history.pushState({}, '', '/');
 
-const router = new Router(".app");
+const router = new Router("#content");
 
 router
   .use("/", Chat)

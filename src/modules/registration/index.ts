@@ -52,10 +52,10 @@ export class Registration extends Block {
   }
 }
 
-const registration = new Registration('div', {
-  events: {
-    submit: formValidation
-  }
-})
+// const registration = new Registration('div', {
+//   events: {
+//     submit: formValidation
+//   }
+// })
 
-document.querySelector('#container')?.append(registration.getContent())
+// document.querySelector('#content')?.append(registration.getContent())

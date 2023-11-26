@@ -16,7 +16,7 @@ export class Block {
   _isFirstRender: boolean = true
   eventBus: () => InstanceType<typeof EventBus>
 
-  constructor(tagName = "div", props: props = { props: {}, events: {} }) {
+  constructor(tagName = "div", props: props = { props: {}, events: {}, query: {} }) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
