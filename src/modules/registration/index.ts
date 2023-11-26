@@ -7,7 +7,7 @@ import './style.scss'
 import { Block } from '../../utils/Block';
 import { formValidation, inputValidation } from '../../utils/validation';
 
-class Registration extends Block {
+export class Registration extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()

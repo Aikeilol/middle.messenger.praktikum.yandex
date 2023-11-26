@@ -2,7 +2,7 @@ import { EventBus } from './../EventBus/index';
 import { meta, props } from './types/index';
 
 
-export abstract class Block {
+export class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
