@@ -3,26 +3,26 @@
 export const pages = [
   {
     text: 'Авторизация',
-    href: '/src/pages/authorization/index.html',
+    href: '/authorization',
   },
   {
     text: 'Регистрация',
-    href: '/src/pages/registration/index.html',
+    href: '/registration',
   },
   {
     text: '404',
-    href: '/src/pages/404/index.html',
+    href: '/404',
   },
   {
     text: '500',
-    href: '/src/pages/500/index.html',
+    href: '/500',
   },
   {
     text: 'Чат',
-    href: '/src/pages/chat/index.html',
+    href: '/chat',
   },
   {
     text: 'Настройки аккаунта',
-    href: '/src/pages/account/index.html',
+    href: '/account',
   }
 ]

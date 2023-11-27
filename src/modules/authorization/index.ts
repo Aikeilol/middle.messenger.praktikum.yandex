@@ -33,11 +33,12 @@ export class Authorization extends Block {
 
     const link = handlebarsCompiler(Link(), {
       text: 'Ещё не зарегистрированы ?',
-      href: '/src/pages/registration/index.html',
+      href: '/registration',
     })
 
     return (
       `
+      <div class="authorization-container">
       <div class="authorization__title">
         Регистрация
       </div>
@@ -47,7 +48,8 @@ export class Authorization extends Block {
         <div id="authorization__button" class="authorization__form__button">
         ${buttonResult + link}
         </div>
-      </form>`
+      </form>
+      </div>`
     )
   }
 }
@@ -58,4 +60,3 @@ const authorization = new Authorization('div', {
   }
 })
 
-document.querySelector('#container')?.append(authorization.getContent())

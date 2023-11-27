@@ -16,7 +16,7 @@ export class Block {
   _isFirstRender: boolean = true
   eventBus: () => InstanceType<typeof EventBus>
 
-  constructor(tagName = "div", props: props = { props: {}, events: {}, query: {} }) {
+  constructor(tagName = "div", props: props = { props: {}, events: {} }) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
@@ -158,7 +158,7 @@ export class Block {
   }
 
   show() {
-    this.getContent()!.style.display = "block";
+    this.getContent()!.style.display = "flex";
   }
 
   hide() {

@@ -32,11 +32,12 @@ export class Registration extends Block {
     const buttonResult = handlebarsCompiler(Button(), { text: 'Зарегистрироваться' })
     const link = handlebarsCompiler(Link(), {
       text: 'Уже есть аккаунт ?',
-      href: '/src/pages/authorization/index.html',
+      href: '/authorization',
     })
 
     return (
       `
+      <div class="registration-container">
       <div class="registration__title">
         Регистрация
       </div>
@@ -47,7 +48,9 @@ export class Registration extends Block {
         <div id="registration__button" class="registration__form__button">
         ${buttonResult + link}
         </div>
-      </form>`
+      </form>
+      </div>`
+
     )
   }
 }

@@ -1,8 +1,14 @@
 import { Block } from "../utils/Block";
-import { Authorization } from "../modules/authorization";
-import { AccountDataForm } from "../modules/account/components/AccountDataForm";
 import { Registration } from "../modules/registration";
 import { Chat } from "../modules/chat";
+import { formValidation } from "../utils/validation";
+import { props } from "../utils/Block/types";
+import { MainPage } from "../modules/mainPage";
+import { Account } from "../modules/account";
+import { Error500 } from "../modules/500";
+import { Error400 } from "../modules/404";
+import { Authorization } from "../modules/authorization";
+import { onLinkClick } from "./onLinkClick";
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
@@ -18,8 +24,8 @@ class Route {
   _pathname: string
   _blockClass: typeof Block
   _block: InstanceType<typeof Block> | null
-  _props: Record<string, unknown>
-  constructor(pathname: string, view: typeof Block, props: Record<string, unknown>) {
+  _props: props & { rootQuery: string }
+  constructor(pathname: string, view: typeof Block, props: props & { rootQuery: string }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -45,7 +51,7 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass();
+      this._block = new this._blockClass('div', this._props.props);
       render(this._props.rootQuery, this._block);
       return;
     }
@@ -55,28 +61,33 @@ class Route {
 }
 
 class Router {
-  constructor(rootQuery) {
+  routes: InstanceType<typeof Route>[] = []
+  history = window.history;
+  _currentRoute: InstanceType<typeof Route> | null = null;
+  _rootQuery: string = ''
+  static __instance: InstanceType<typeof Router>;
+
+  constructor(rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance;
     }
 
-    this.routes = [];
-    this.history = window.history;
-    this._currentRoute = null;
-    this._rootQuery = rootQuery;
 
+    this._rootQuery = rootQuery;
     Router.__instance = this;
   }
 
-  use(pathname, block) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(pathname: string, block: typeof Block, props?: props) {
+    const route = new Route(pathname, block, { rootQuery: this._rootQuery, props: props });
     this.routes.push(route);
     return this
   }
 
   start() {
     window.onpopstate = event => {
-      this._onRoute(event.currentTarget.location.pathname);
+      console.log('sds', event)
+      const target = event.currentTarget as typeof window
+      this._onRoute(target.location.pathname);
     };
 
     this._onRoute(window.location.pathname);
@@ -84,7 +95,7 @@ class Router {
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
-    if (!route) { 
+    if (!route) {
       return;
     }
 
@@ -93,36 +104,65 @@ class Router {
     }
 
     this._currentRoute = route;
-    route.render(route, pathname);
+    route.render();
   }
 
-  go(pathname) {
+  go(pathname: string) {
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }
 
   back() {
-    this._onRoute(this.history.back())
+    this._onRoute(String(this.history.back()))
   }
 
   forward() {
-    this._onRoute(this.history.forward())
+    this._onRoute(String(this.history.forward()))
   }
 
   getRoute(pathname: string) {
-    console.log(this.routes)
     return this.routes.find(route => route.match(pathname));
   }
 }
 
 
-history.pushState({}, '', '/');
-
 const router = new Router("#content");
 
 router
-  .use("/", Chat)
-  .use('/registration', Registration)
-  // .use("/users", Users)
+  .use("/", MainPage, {
+    events: {
+      click: onLinkClick
+    }
+  })
+  .use('/chat', Chat)
+  .use('/registration', Registration, {
+    events: {
+      submit: formValidation,
+      click: onLinkClick
+    }
+  })
+  .use('/authorization', Authorization, {
+    events: {
+      submit: formValidation,
+      click: onLinkClick
+    }
+  })
+  .use('/account', Account, {
+    events: {
+      click: onLinkClick
+    }
+  })
+  .use('/500', Error500, {
+    events: {
+      click: onLinkClick
+    }
+  })
+  .use('/404', Error400, {
+    events: {
+      click: onLinkClick
+    }
+  })
   .start()
-  
+
+
+export default router

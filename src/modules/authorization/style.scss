@@ -2,15 +2,25 @@
 
 .authorization {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  background: rgba(0, 0, 0, 0.16);
-  min-width: 520px;
-  max-width: 520px;
-  border-radius: 8px;
-  gap: 10px;
-  padding-bottom: 20px;
-  min-height: 320px;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  background: $mainBgColor;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $mainTextColor;
+    background: rgba(0, 0, 0, 0.16);
+    min-width: 520px;
+    border-radius: 8px;
+    gap: 10px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
 
   &__title {
     padding: 20px;

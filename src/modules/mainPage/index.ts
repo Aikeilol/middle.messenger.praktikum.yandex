@@ -4,7 +4,11 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Block } from '../../utils/Block';
 
 
-class MainPage extends Block {
+export class MainPage extends Block {
+
+  componentDidMount(): void {
+    this.getContent().classList.add('menu')
+  }
 
   render(): string {
     const template = `
@@ -20,7 +24,3 @@ class MainPage extends Block {
   }
 }
 
-
-document.querySelector<HTMLDivElement>('#app')?.append(
-  new MainPage('nav').getContent()
-)
