@@ -84,7 +84,6 @@ class Router {
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
-    console.log(route)
     if (!route) { 
       return;
     }
@@ -125,4 +124,5 @@ router
   .use("/", Chat)
   .use('/registration', Registration)
   // .use("/users", Users)
-  .start();
+  .start()
+  
