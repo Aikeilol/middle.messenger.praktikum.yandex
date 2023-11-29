@@ -1,3 +1,4 @@
+import { RegistrationApi } from '../../api/registration'
 import { errorsText } from './errorsText'
 import './style.scss'
 
@@ -83,5 +84,6 @@ export const formValidation = (event: Event) => {
   })
   if (!isError) {
     console.log(formValue)
+    new RegistrationApi().signUpRequest({ ...formValue})
   }
 }

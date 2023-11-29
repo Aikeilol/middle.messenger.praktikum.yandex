@@ -31,7 +31,7 @@ export class HTTPTransport {
 
   request = (url: string, options?: httpOptions, timeout: number = 5000) => {
     const { headers = {}, method, data } = options || {};
-
+    url = `https://ya-praktikum.tech/api/v2${url}`
     return new Promise(function (resolve, reject) {
       if (!method) {
         reject('No method');
@@ -51,6 +51,7 @@ export class HTTPTransport {
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
       });
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
 
       xhr.onload = function () {
         resolve(xhr);
@@ -65,6 +66,7 @@ export class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
+        console.log(JSON.stringify(data))
         xhr.send(JSON.stringify(data));
       }
     });
