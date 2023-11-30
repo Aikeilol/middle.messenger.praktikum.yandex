@@ -5,7 +5,7 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
-import { formValidation, inputValidation } from '../../utils/validation';
+import { inputValidation } from '../../utils/validation';
 
 export class Registration extends Block {
 
@@ -46,6 +46,7 @@ export class Registration extends Block {
 
         </div>
         <div id="registration__button" class="registration__form__button">
+        <p class='onSubmitMessage' id='onSubmitMessage'></p>
         ${buttonResult + link}
         </div>
       </form>

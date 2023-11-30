@@ -47,6 +47,8 @@ export class HTTPTransport {
           ? `${url}${queryStringify(data)}`
           : url,
       );
+      
+      xhr.withCredentials = true
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
@@ -54,7 +56,7 @@ export class HTTPTransport {
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
 
       xhr.onload = function () {
-        resolve(xhr);
+        resolve(JSON.parse(xhr.response));
       };
 
       xhr.onabort = reject;

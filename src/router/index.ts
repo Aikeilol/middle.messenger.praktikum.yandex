@@ -1,7 +1,6 @@
 import { Block } from "../utils/Block";
 import { Registration } from "../modules/registration";
 import { Chat } from "../modules/chat";
-import { formValidation } from "../utils/validation";
 import { props } from "../utils/Block/types";
 import { MainPage } from "../modules/mainPage";
 import { Account } from "../modules/account";
@@ -9,6 +8,9 @@ import { Error500 } from "../modules/500";
 import { Error400 } from "../modules/404";
 import { Authorization } from "../modules/authorization";
 import { onLinkClick } from "./onLinkClick";
+import { regOnSubmit } from "../modules/registration/regOnSubmit";
+import { authOnSubmit } from "../modules/authorization/authOnSubmit";
+import { AuthorizationApi } from "../api/authorization";
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
@@ -127,6 +129,7 @@ class Router {
 
 
 const router = new Router("#content");
+new AuthorizationApi().getAccData()
 
 router
   .use("/", MainPage, {
@@ -137,13 +140,13 @@ router
   .use('/chat', Chat)
   .use('/registration', Registration, {
     events: {
-      submit: formValidation,
+      submit: regOnSubmit,
       click: onLinkClick
     }
   })
   .use('/authorization', Authorization, {
     events: {
-      submit: formValidation,
+      submit: authOnSubmit,
       click: onLinkClick
     }
   })

@@ -1,4 +1,4 @@
-import { formValidation, inputValidation } from './../../utils/validation/index';
+import { inputValidation } from './../../utils/validation/index';
 import { FormInput } from '../../components/FormInput/index';
 import { fields } from './config';
 import { Button } from '../../templates/Button';
@@ -46,6 +46,7 @@ export class Authorization extends Block {
         <div id="authorization__inputs" class="authorization__form__inputs">
         </div>
         <div id="authorization__button" class="authorization__form__button">
+        <p class='onSubmitMessage' id='onSubmitMessage'></p>
         ${buttonResult + link}
         </div>
       </form>
@@ -53,10 +54,3 @@ export class Authorization extends Block {
     )
   }
 }
-
-const authorization = new Authorization('div', {
-  events: {
-    submit: formValidation
-  }
-})
-
