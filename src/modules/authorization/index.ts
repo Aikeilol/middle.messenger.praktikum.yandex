@@ -6,8 +6,9 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
+import { observer } from '../../store';
 
-export class Authorization extends Block {
+class authorization extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
@@ -33,14 +34,14 @@ export class Authorization extends Block {
 
     const link = handlebarsCompiler(Link(), {
       text: 'Ещё не зарегистрированы ?',
-      href: '/registration',
+      href: '/sign-up',
     })
 
     return (
       `
       <div class="authorization-container">
       <div class="authorization__title">
-        Регистрация
+        Авторизация
       </div>
       <form id="authorization__form" class="authorization__form" action="">
         <div id="authorization__inputs" class="authorization__form__inputs">
@@ -54,3 +55,5 @@ export class Authorization extends Block {
     )
   }
 }
+
+export const Authorization = observer(authorization, ['accData'])

@@ -3,23 +3,47 @@ import { formInputs } from './config'
 import './style.scss'
 import { Block } from '../../../../utils/Block';
 import { inputValidation } from '../../../../utils/validation';
+import { Store, observer } from '../../../../store';
+import { accData } from '../../../../api/authorization';
 
 
-export class AccountDataForm extends Block {
+export class accountDataForm extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
     content.classList.add('account-settings')
     const allinputs = content.querySelectorAll('.account-settings__setting')
+    const accData = new Store().getState('accData')
     formInputs.map((input, i) => {
       const htmlInput = new Input('input', {
-        props: input,
+        props: {
+          ...input,
+          placeholder: accData?.[input.name as keyof accData] || ''
+        },
         events: {
           blur: inputValidation
         }
       }).getContent()
       allinputs?.[i].append(htmlInput)
     })
+  }
+
+  componentDidUpdate() {
+    const content = this.getContent()
+    const allinputs = content.querySelectorAll('.account-settings__setting')
+    formInputs.map((input, i) => {
+      const htmlInput = new Input('input', {
+        props: {
+          ...input,
+          placeholder: this.props.props?.[input.name as keyof accData] || ''
+        },
+        events: {
+          blur: inputValidation
+        }
+      }).getContent()
+      allinputs?.[i].append(htmlInput)
+    })
+    return true
   }
 
   render(): string {
@@ -50,3 +74,6 @@ export class AccountDataForm extends Block {
     )
   }
 }
+
+
+export const AccountDataForm = observer(accountDataForm, ['accData'])

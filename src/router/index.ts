@@ -11,6 +11,7 @@ import { onLinkClick } from "./onLinkClick";
 import { regOnSubmit } from "../modules/registration/regOnSubmit";
 import { authOnSubmit } from "../modules/authorization/authOnSubmit";
 import { AuthorizationApi } from "../api/authorization";
+import { Store } from "../store";
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
@@ -65,6 +66,7 @@ class Route {
 class Router {
   routes: InstanceType<typeof Route>[] = []
   history = window.history;
+  isAuth: boolean = false
   _currentRoute: InstanceType<typeof Route> | null = null;
   _rootQuery: string = ''
   static __instance: InstanceType<typeof Router>;
@@ -73,7 +75,15 @@ class Router {
     if (Router.__instance) {
       return Router.__instance;
     }
+    const store = new Store()
 
+    store.on('accData', () => {
+      this.isAuth = !!store.getState('accData')
+    })
+
+    new AuthorizationApi().getAccData().then(res => {
+      store.setState('accData', res)
+    })
 
     this._rootQuery = rootQuery;
     Router.__instance = this;
@@ -87,7 +97,6 @@ class Router {
 
   start() {
     window.onpopstate = event => {
-      console.log('sds', event)
       const target = event.currentTarget as typeof window
       this._onRoute(target.location.pathname);
     };
@@ -129,7 +138,6 @@ class Router {
 
 
 const router = new Router("#content");
-new AuthorizationApi().getAccData()
 
 router
   .use("/", MainPage, {
@@ -137,20 +145,20 @@ router
       click: onLinkClick
     }
   })
-  .use('/chat', Chat)
-  .use('/registration', Registration, {
+  .use('/messenger', Chat)
+  .use('/sign-up', Registration, {
     events: {
       submit: regOnSubmit,
       click: onLinkClick
     }
   })
-  .use('/authorization', Authorization, {
+  .use('/sign-in', Authorization, {
     events: {
       submit: authOnSubmit,
       click: onLinkClick
     }
   })
-  .use('/account', Account, {
+  .use('/settings', Account, {
     events: {
       click: onLinkClick
     }

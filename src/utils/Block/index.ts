@@ -23,9 +23,9 @@ export class Block {
       props
     };
 
-    this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
+    this.props = this._makePropsProxy(props);
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -61,18 +61,16 @@ export class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
-    const response = this.componentDidUpdate(oldProps, newProps);
-    if (!response) {
-      return;
-    }
+  _componentDidUpdate(newProps: unknown) {
+    this.setProps(newProps as props)
     this._removeEvents()
     this._render();
+    this.componentDidUpdate();
   }
 
 
-  componentDidUpdate(oldProps?: unknown, newProps?: unknown) {
-    return { oldProps, newProps }
+  componentDidUpdate() {
+    
   }
 
   setProps = (nextProps: props) => {
@@ -80,7 +78,7 @@ export class Block {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    Object.assign(this.props.props as props, nextProps);
   };
 
   get element() {
@@ -133,7 +131,7 @@ export class Block {
     return this.element as HTMLElement;
   }
 
-  _makePropsProxy(props: props) {
+  _makePropsProxy(props: props = {}) {
     const eventBus = this.eventBus
     return new Proxy(props, {
       get(target, prop) {

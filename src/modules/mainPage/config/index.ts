@@ -3,11 +3,11 @@
 export const pages = [
   {
     text: 'Авторизация',
-    href: '/authorization',
+    href: '/sign-in',
   },
   {
     text: 'Регистрация',
-    href: '/registration',
+    href: '/sign-up',
   },
   {
     text: '404',
@@ -19,10 +19,10 @@ export const pages = [
   },
   {
     text: 'Чат',
-    href: '/chat',
+    href: '/messenger',
   },
   {
     text: 'Настройки аккаунта',
-    href: '/account',
+    href: '/settings',
   }
 ]

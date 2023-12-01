@@ -47,7 +47,7 @@ export class HTTPTransport {
           ? `${url}${queryStringify(data)}`
           : url,
       );
-      
+
       xhr.withCredentials = true
 
       Object.keys(headers).forEach(key => {
@@ -56,7 +56,11 @@ export class HTTPTransport {
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
 
       xhr.onload = function () {
-        resolve(JSON.parse(xhr.response));
+        try {
+          resolve(JSON.parse(xhr.response));
+        } catch (e) {
+          resolve(xhr.response)
+        }
       };
 
       xhr.onabort = reject;
@@ -68,7 +72,6 @@ export class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        console.log(JSON.stringify(data))
         xhr.send(JSON.stringify(data));
       }
     });

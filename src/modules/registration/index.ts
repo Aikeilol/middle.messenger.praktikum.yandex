@@ -32,7 +32,7 @@ export class Registration extends Block {
     const buttonResult = handlebarsCompiler(Button(), { text: 'Зарегистрироваться' })
     const link = handlebarsCompiler(Link(), {
       text: 'Уже есть аккаунт ?',
-      href: '/authorization',
+      href: '/sign-in',
     })
 
     return (

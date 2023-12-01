@@ -1,21 +1,54 @@
 import { accData } from "../api/authorization"
+import { Block } from "../utils/Block"
+import { props } from "../utils/Block/types"
+import { EventBus } from "../utils/EventBus"
 
 
-interface IStore {
-  state: {
-    accData: accData | null
-    subscribers: Record<keyof IStore['state'], (state: unknown) => void> | null
-  }
+type state = {
+  accData: accData | null
 }
 
-export class Store implements IStore {
-  state = {
+type keys = keyof state
+type values = state[keys]
+
+export class Store extends EventBus {
+  state: state = {
     accData: null,
-    subscribers: null
+  }
+  static __instance: any
+
+  constructor() {
+    super()
+    if (Store.__instance) {
+      return Store.__instance;
+    }
+
+    Store.__instance = this;
   }
 
-  setState(stateKey: keyof IStore['state'], value: unknown) {
-
+  getState(stateKey: keys) {
+    return this.state[stateKey]
   }
 
+  setState(stateKey: keys, value: values) {
+    this.state[stateKey] = value
+    this.emit(stateKey, value)
+  }
+
+}
+
+export const observer = (Component: typeof Block, subKeys: keys[]) => {
+  return class extends Component {
+    constructor(...args: any) {
+      super(...args);
+      const store = new Store()
+
+      subKeys.forEach(key => {
+        store.on(key, () => {
+          this._componentDidUpdate({ ...store.getState(key) as props });
+        })
+      })
+
+    }
+  }
 }

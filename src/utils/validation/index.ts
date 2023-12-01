@@ -26,7 +26,7 @@ export const validation = (name: string, value: string) => {
     return value.match(/(\+7|8)[0-9]{10,15}/ig)
   }
 
-  if (name === 'display_name' || name === 'message' || name === 'search') {
+  if (name === 'display_name' || name === 'message' || name === 'search' || name === 'avatar') {
     return value
   }
 
@@ -60,6 +60,10 @@ export const formValidation = (event: Event) => {
   const formValue: Record<string, string> = {}
   let isError = false
   inputs.forEach(input => {
+    if (input.name === 'avatar') {
+      return null
+    }
+
     formValue[input.name] = input.value
     const validatedValue = validation(String(input.name), String(input.value))
     const isAlreadyError = input.parentElement?.querySelector(`#error-message_${input.name}`)
@@ -82,6 +86,6 @@ export const formValidation = (event: Event) => {
     }
   })
   if (!isError) {
-    return(formValue)
+    return (formValue)
   }
 }

@@ -40,16 +40,16 @@ export const formInputs = [
     title: 'Телефон'
 
   },
-  {
-    name: 'oldPassword',
-    placeholder: '*****',
-    className: 'account-settings_input',
-    title: 'Старый пароль'
-  },
-  {
-    name: 'newPassword',
-    placeholder: 'Введите новый пароль',
-    className: 'account-settings_input',
-    title: 'Новый пароль'
-  },
+  // {
+  //   name: 'oldPassword',
+  //   placeholder: '*****',
+  //   className: 'account-settings_input',
+  //   title: 'Старый пароль'
+  // },
+  // {
+  //   name: 'newPassword',
+  //   placeholder: 'Введите новый пароль',
+  //   className: 'account-settings_input',
+  //   title: 'Новый пароль'
+  // },
 ]

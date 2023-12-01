@@ -1,4 +1,6 @@
 import { AuthorizationApi, signInParams } from '../../../api/authorization';
+import router from '../../../router';
+import { Store } from '../../../store';
 import { formValidation } from './../../../utils/validation/index';
 
 
@@ -9,13 +11,17 @@ export const authOnSubmit = (event: Event) => {
     authorizationApi.signInRequest(formValues as signInParams)
       .then(res => {
         const message = document.querySelector('#onSubmitMessage')
-
         if (res.reason) {
           message!.textContent = res.reason
           return
         }
+
         message!.textContent = 'Вы успешно зарегистрированы'
-        authorizationApi.getAccData()
+        authorizationApi.getAccData().then(res => {
+          const store = new Store()
+          store.setState('accData', res)
+          router.go('/chat')
+        })
       })
       .catch(err => {
         if (err?.reason) {
