@@ -12,6 +12,8 @@ import { regOnSubmit } from "../modules/registration/regOnSubmit";
 import { authOnSubmit } from "../modules/authorization/authOnSubmit";
 import { AuthorizationApi } from "../api/authorization";
 import { Store } from "../store";
+import { ChangePassword } from "../modules/changePassword";
+import { changePasOnSubmit } from "../modules/changePassword/changePasOnSubmit";
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
@@ -162,6 +164,12 @@ router
   .use('/settings', Account, {
     events: {
       click: onLinkClick
+    }
+  })
+  .use('/change-password', ChangePassword, {
+    events: {
+      click: onLinkClick,
+      submit: changePasOnSubmit,
     }
   })
   .use('/500', Error500, {

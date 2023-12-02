@@ -1,6 +1,6 @@
 import { HTTPMethod, httpOptions, METHODS } from "./types";
 
-function queryStringify(data: httpOptions['data']) {
+function queryStringify(data: Record<string, unknown>) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -30,7 +30,7 @@ export class HTTPTransport {
   };
 
   request = (url: string, options?: httpOptions, timeout: number = 5000) => {
-    const { headers = {}, method, data } = options || {};
+    const { headers = {}, method, data, contentType = 'application/json; charset=utf-8' } = options || {};
     url = `https://ya-praktikum.tech/api/v2${url}`
     return new Promise(function (resolve, reject) {
       if (!method) {
@@ -44,7 +44,7 @@ export class HTTPTransport {
       xhr.open(
         method,
         isGet && !!data
-          ? `${url}${queryStringify(data)}`
+          ? `${url}${queryStringify(data as Record<string, unknown>)}`
           : url,
       );
 
@@ -53,7 +53,10 @@ export class HTTPTransport {
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
       });
-      xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
+
+      if (contentType === 'application/json; charset=utf-8') {
+        xhr.setRequestHeader('Content-Type', contentType)
+      }
 
       xhr.onload = function () {
         try {
@@ -72,7 +75,7 @@ export class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        contentType === 'application/json; charset=utf-8' ? xhr.send(JSON.stringify(data)) : xhr.send(data as unknown as FormData);
       }
     });
   };

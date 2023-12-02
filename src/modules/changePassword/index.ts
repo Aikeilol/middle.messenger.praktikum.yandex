@@ -7,12 +7,12 @@ import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
 
-class authorization extends Block {
+export class ChangePassword extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
-    content.classList.add('authorization')
-    const inputsContainer = content.querySelector('#authorization__inputs')
+    content.classList.add('change-password')
+    const inputsContainer = content.querySelector('#change-password__inputs')
 
     fields.forEach(field => {
       const formInput = new FormInput('div', {
@@ -30,23 +30,23 @@ class authorization extends Block {
 
   render(): string {
 
-    const buttonResult = handlebarsCompiler(Button(), { text: 'Войти' })
+    const buttonResult = handlebarsCompiler(Button(), { text: 'Изменить пароль' })
 
     const link = handlebarsCompiler(Link(), {
-      text: 'Ещё не зарегистрированы ?',
-      href: '/sign-up',
+      text: 'Назад к настройкам аккаунта',
+      href: '/settings',
     })
 
     return (
       `
-      <div class="authorization-container">
-      <div class="authorization__title">
-        Авторизация
+      <div class="change-password-container">
+      <div class="change-password__title">
+        Сменить пароль
       </div>
-      <form id="authorization__form" class="authorization__form" action="">
-        <div id="authorization__inputs" class="authorization__form__inputs">
+      <form id="change-password__form" class="change-password__form" action="">
+        <div id="change-password__inputs" class="change-password__form__inputs">
         </div>
-        <div id="authorization__button" class="authorization__form__button">
+        <div id="change-password__button" class="change-password__form__button">
         <p class='onSubmitMessage' id='onSubmitMessage'></p>
         ${buttonResult + link}
         </div>
@@ -55,5 +55,3 @@ class authorization extends Block {
     )
   }
 }
-
-export const Authorization = authorization

@@ -73,12 +73,12 @@ export class Block {
 
   }
 
-  setProps = (nextProps: props) => {
+  setProps = (nextProps: props = {}) => {
     if (!nextProps) {
       return;
     }
 
-    Object.assign(this.props.props as props, nextProps);
+    Object.assign(this.props.props as props || {}, nextProps);
   };
 
   get element() {

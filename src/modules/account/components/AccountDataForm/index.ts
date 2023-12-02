@@ -60,13 +60,16 @@ export class accountDataForm extends Block {
 
     return (
       `
-      <label class="custom-file-upload">
-        <input name="avatar" type="file" />
-      </label>
       ${inputs.join('')}
       <div class="account-settings__setting_blue account-settings__setting">
         <button class="">Изменить данные</button>
       </div>
+      <div class="account-settings__setting_blue account-settings__setting">
+      <a href="/change-password">Изменить пароль</a>
+    </div>
+    <div class="account-settings__setting_blue account-settings__setting">
+    <a href="/messenger">Назад к чатам</a>
+  </div>
       <div class="account-settings__setting_red account-settings__setting">
         <p id='logout' class="">Выйти</p>
       </div>
