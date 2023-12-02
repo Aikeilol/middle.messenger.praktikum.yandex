@@ -68,7 +68,7 @@ export class accountDataForm extends Block {
         <button class="">Изменить данные</button>
       </div>
       <div class="account-settings__setting_red account-settings__setting">
-        <p class="">Выйти</p>
+        <p id='logout' class="">Выйти</p>
       </div>
     `
     )

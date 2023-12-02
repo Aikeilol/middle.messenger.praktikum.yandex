@@ -32,4 +32,8 @@ export class AuthorizationApi {
   getAccData() {
     return this._HTTPTransport.get('/auth/user') as Promise<accData>
   }
+
+  logout(){
+    return this._HTTPTransport.post('/auth/logout')
+  }
 }

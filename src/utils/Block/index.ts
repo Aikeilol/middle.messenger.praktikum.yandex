@@ -70,7 +70,7 @@ export class Block {
 
 
   componentDidUpdate() {
-    
+
   }
 
   setProps = (nextProps: props) => {
@@ -156,10 +156,10 @@ export class Block {
   }
 
   show() {
-    this.getContent()!.style.display = "flex";
+    document.querySelector('#content')?.append(this.getContent())
   }
 
   hide() {
-    this.getContent()!.style.display = "none";
+    this.getContent().remove()
   }
 }

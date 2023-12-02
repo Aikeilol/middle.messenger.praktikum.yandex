@@ -32,4 +32,5 @@ export class UserApi {
   changeUserData(data: accData) {
     return this._HTTPTransport.put('/user/profile', { data }) as Promise<changeUserDataResponse>
   }
+
 }

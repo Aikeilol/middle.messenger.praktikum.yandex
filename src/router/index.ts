@@ -45,6 +45,7 @@ class Route {
   leave() {
     if (this._block) {
       this._block.hide();
+      // document.querySelector('#content')!.removeChild(this._block.getContent())
     }
   }
 
