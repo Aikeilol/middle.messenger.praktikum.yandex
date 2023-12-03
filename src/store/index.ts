@@ -5,7 +5,8 @@ import { EventBus } from "../utils/EventBus"
 
 
 type state = {
-  accData: accData | null
+  accData: accData | null,
+
 }
 
 type keys = keyof state
@@ -45,7 +46,7 @@ export const observer = (Component: typeof Block, subKeys: keys[]) => {
 
       subKeys.forEach(key => {
         store.on(key, () => {
-          this._componentDidUpdate({ ...store.getState(key) as props });
+          this.setProps({ ...store.getState(key) as props });
         })
       })
 

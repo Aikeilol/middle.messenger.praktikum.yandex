@@ -61,8 +61,7 @@ export class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(newProps: unknown) {
-    this.setProps(newProps as props)
+  _componentDidUpdate() {
     this._removeEvents()
     this._render();
     this.componentDidUpdate();
@@ -73,12 +72,13 @@ export class Block {
 
   }
 
-  setProps = (nextProps: props = {}) => {
+  setProps = (nextProps: props['props'] = {}) => {
     if (!nextProps) {
       return;
     }
 
     Object.assign(this.props.props as props || {}, nextProps);
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU)
   };
 
   get element() {

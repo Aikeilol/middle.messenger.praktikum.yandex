@@ -17,4 +17,5 @@ export class ChatMessages extends Block {
     this.getContent().classList.add('chat__message-block')
     this.getContent().append(chatHeader, messageBlock, chatInput)
   }
+
 }
