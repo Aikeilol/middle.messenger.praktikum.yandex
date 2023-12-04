@@ -8,6 +8,7 @@ export const onAddChat = (e: Event) => {
 
   if (target.getAttribute('id') === 'create-chat') {
     const inputValue = document.getElementsByName('chat-name')[0] as HTMLInputElement
+
     return new ChatApi().createChat({ title: inputValue.value })
   }
 }

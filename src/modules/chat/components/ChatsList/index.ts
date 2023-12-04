@@ -19,6 +19,7 @@ export class ChatsList extends Block {
           click: (e: Event) => {
             const target = e.target as HTMLDivElement
             const id = target.getAttribute('id')
+            console.log(id)
             const getSelectedChatId = this.props.props?.getSelectedChatId as (id: number) => void
             getSelectedChatId(Number(id))
           }
@@ -32,9 +33,11 @@ export class ChatsList extends Block {
     const addChatForm = new AddChatForm('form', {
       events: {
         click: (e: Event) => {
-          onAddChat(e)?.then(() => {
-            const getSingleChat = this.props.props?.getSingleChat as () => void
-            getSingleChat()
+          onAddChat(e)?.then((res) => {
+            if (!res.reason) {
+              const getSingleChat = this.props.props?.getSingleChat as () => void
+              getSingleChat()
+            }
           })
         }
       }

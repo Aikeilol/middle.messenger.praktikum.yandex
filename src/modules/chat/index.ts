@@ -24,7 +24,9 @@ export class Chat extends Block {
     }
 
     return new ChatApi().getChats({ offset: this.offset, limit: this.limit }).then(res => {
-      this.chatData = [...this.chatData, ...res]
+      this.setProps({
+        chatData: [...this.props.props?.chatData || [], ...res]
+      })
       this.offset = this.offset + this.limit
     })
   }
@@ -38,46 +40,40 @@ export class Chat extends Block {
   }
 
   getSelectedChatId(id: number) {
-    this.selectedChatId = id
-    new ChatApi().getChatToken(this.selectedChatId).then((res) => {
+    console.log(id)
+    new ChatApi().getChatToken(id).then((res) => {
       this.selectedChatToken = res.token
       // const websocket = new Websocket(String(new Store().getState('accData')?.id || 0), this.selectedChatId, this.selectedChatToken)
       // setTimeout(() => websocket.sendMessage('pepega'), 1000)
-      this.chatMessages.setProps({
+      this.setProps({
         userId: String(new Store().getState('accData')?.id || 0),
-        chatId: this.selectedChatId,
+        chatId: id,
         token: this.selectedChatToken
       })
     })
   }
 
   renderChatMessages() {
-    this.chatMessages = new ChatMessages('div', {
+    const chatMessages = new ChatMessages('div', {
       props: {
         userId: String(new Store().getState('accData')?.id || 0),
-        chatId: this.selectedChatId,
-        token: this.selectedChatToken
+        chatId: this.props.props?.selectedChatId,
+        token: this.props.props?.selectedChatToken
       }
     })
-
-    setTimeout(() => console.log(this.chatMessages), 12000)
-
-    return this.chatMessages.getContent()
+    return chatMessages.getContent()
   }
 
-  componentDidMount(): void {
-    const content = this.getContent()
-    content.classList.add('chat')
-
+  renderChatList() {
     const chatsList = new ChatsList('div', {
       props: {
         getSingleChat: () => {
           this.getSingleChat().then(() => {
-            chatsList.setProps({ chatData: this.chatData })
+            this.setProps({ chatData: this.props.props?.chatData })
           })
         },
-        getSelectedChatId: this.getSelectedChatId.bind(this),
-        chatData: this.chatData || []
+        getSelectedChatId: this.getSelectedChatId,
+        chatData: this.props.props?.chatData || []
       },
       events: {
         click: (e: Event) => {
@@ -86,19 +82,33 @@ export class Chat extends Block {
           const id = event.getAttribute('id')
           if (id === 'load-more') {
             this.getChats().then(() => {
-              chatsList.setProps({ chatData: this.chatData })
+              this.setProps({ chatData: this.props.props?.chatData })
             })
           }
         }
       }
     })
 
-    this.getChats().then(() => {
-      chatsList.setProps({ chatData: this.chatData })
-    })
     chatsList.getContent().classList.add('chat__list')
 
-    content.append(chatsList.getContent(), this.renderChatMessages())
+    return chatsList.getContent()
+  }
+
+  componentDidMount(): void {
+    const content = this.getContent()
+    content.classList.add('chat')
+
+    this.getChats().then(() => {
+      this.setProps({ chatData: this.props.props?.chatData })
+    })
+
+    content.append(this.renderChatList(), this.renderChatMessages())
+  }
+
+  componentDidUpdate(): void {
+    const content = this.getContent()
+
+    content.append(this.renderChatList(), this.renderChatMessages())
   }
 
 }
