@@ -1,6 +1,6 @@
 import { ChatApi } from '../../api/chat';
 import { getChatData } from '../../api/chat/types';
-import { Websocket } from '../../api/chat/websocket';
+import { Websocket, message, oldMessages } from '../../api/chat/websocket';
 import { Store } from '../../store';
 import { Block } from '../../utils/Block';
 import { ChatMessages } from './components/ChatMessages';
@@ -8,12 +8,14 @@ import { ChatsList } from './components/ChatsList';
 import './style.scss'
 
 export class Chat extends Block {
+  chatsList!: InstanceType<typeof ChatsList>
   chatMessages!: InstanceType<typeof ChatMessages>
   offset = 0
   limit = 20
   chatData: getChatData | [] = []
   selectedChatId: number = 0
   selectedChatToken = ''
+  websocket!: InstanceType<typeof Websocket>
 
   getChats() {
     if (!this.offset) {
@@ -24,8 +26,9 @@ export class Chat extends Block {
     }
 
     return new ChatApi().getChats({ offset: this.offset, limit: this.limit }).then(res => {
+      const currentChatData = this.props.props?.chatData as getChatData
       this.setProps({
-        chatData: [...this.props.props?.chatData || [], ...res]
+        chatData: [...currentChatData || [], ...res]
       })
       this.offset = this.offset + this.limit
     })
@@ -33,32 +36,51 @@ export class Chat extends Block {
 
   getSingleChat() {
     return new ChatApi().getChats({ offset: 0, limit: 1 }).then(res => {
+      const chatData = this.props.props?.chatData as getChatData
+      chatData.unshift(res?.[0] as never)
+      this.setProps({
+        chatData: chatData
+      })
 
-      this.chatData.unshift(res.shift() as never)
-      // chatsList?.setProps({ chatData: this.chatData })
     })
   }
 
-  getSelectedChatId(id: number) {
-    console.log(id)
-    new ChatApi().getChatToken(id).then((res) => {
-      this.selectedChatToken = res.token
-      // const websocket = new Websocket(String(new Store().getState('accData')?.id || 0), this.selectedChatId, this.selectedChatToken)
-      // setTimeout(() => websocket.sendMessage('pepega'), 1000)
+  setMessages(message: string) {
+    const parsedMessage = JSON.parse(message) as message | oldMessages
+    const currentMessages = this.props.props?.messages as oldMessages
+    if (Array.isArray(parsedMessage)) {
       this.setProps({
-        userId: String(new Store().getState('accData')?.id || 0),
-        chatId: id,
-        token: this.selectedChatToken
+        messages: [...parsedMessage, ...currentMessages || [],]
       })
+      return
+    }
+    
+    currentMessages.push(parsedMessage)
+
+    this.setProps({
+      messages: currentMessages
+    })
+
+  }
+
+  getSelectedChatId(id: number) {
+    new ChatApi().getChatToken(id).then((res) => {
+
+      if (this.websocket) {
+        this.websocket.close()
+        this.props.props!.messages = []
+      }
+
+      this.websocket = new Websocket(String(new Store().getState('accData')?.id || 0), id, res.token, this.setMessages.bind(this))
+
     })
   }
 
   renderChatMessages() {
     const chatMessages = new ChatMessages('div', {
       props: {
-        userId: String(new Store().getState('accData')?.id || 0),
-        chatId: this.props.props?.selectedChatId,
-        token: this.props.props?.selectedChatToken
+        messages: this.props.props?.messages,
+        sendMessage: this.websocket?.sendMessage.bind(this.websocket)
       }
     })
     return chatMessages.getContent()
@@ -72,8 +94,8 @@ export class Chat extends Block {
             this.setProps({ chatData: this.props.props?.chatData })
           })
         },
-        getSelectedChatId: this.getSelectedChatId,
-        chatData: this.props.props?.chatData || []
+        getSelectedChatId: this.getSelectedChatId.bind(this),
+        chatData: this.props.props?.chatData || [],
       },
       events: {
         click: (e: Event) => {
@@ -97,7 +119,6 @@ export class Chat extends Block {
   componentDidMount(): void {
     const content = this.getContent()
     content.classList.add('chat')
-
     this.getChats().then(() => {
       this.setProps({ chatData: this.props.props?.chatData })
     })
@@ -113,4 +134,3 @@ export class Chat extends Block {
 
 }
 
-// document.querySelector<HTMLDivElement>('#content')!.append(new Chat().getContent())

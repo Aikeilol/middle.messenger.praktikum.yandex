@@ -13,7 +13,7 @@ export class ChatInput extends Block {
     const input = new Input('input', {
       props: {
         name: 'message',
-        placeholder: "Наберите текст...",
+        placeholder: "",
         className: "ChatInput_input"
       },
       events: {

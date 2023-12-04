@@ -7,15 +7,51 @@ import './style.scss'
 
 export class ChatMessages extends Block {
 
-  componentDidMount() {
-    const chatHeader = new ChatHeader('div').getContent()
-    const messageBlock = new MessageBlock('div').getContent()
+  renderChatHeader() {
+    const chatHeader = new ChatHeader('div')
+
+    return chatHeader.getContent()
+  }
+
+  renderMessageBlock() {
+    const messageBlock = new MessageBlock('div', {
+      props: {
+        messages: this.props.props?.messages || []
+      }
+    })
+
+    return messageBlock.getContent()
+  }
+
+  renderChatInput() {
+
     const chatInput = new ChatInput('form', {
       events:
-        { submit: formValidation }
-    }).getContent()
+      {
+        submit: (e: Event) => {
+          const sendMessage = this.props.props?.sendMessage as (message: string) => void
+          const message = formValidation(e)?.message
+          if (message) {
+            sendMessage(message as string)
+          }
+        }
+      }
+    })
+
+    return chatInput.getContent()
+  }
+
+  componentDidMount() {
+
+
     this.getContent().classList.add('chat__message-block')
-    this.getContent().append(chatHeader, messageBlock, chatInput)
+
+    this.getContent().append(this.renderChatHeader(), this.renderMessageBlock(), this.renderChatInput())
+  }
+
+  componentDidUpdate(): void {
+
+    this.getContent().append(this.renderChatHeader(), this.renderMessageBlock(), this.renderChatInput())
   }
 
 }

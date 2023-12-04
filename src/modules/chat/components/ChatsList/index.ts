@@ -16,12 +16,9 @@ export class ChatsList extends Block {
           ...chat,
         },
         events: {
-          click: (e: Event) => {
-            const target = e.target as HTMLDivElement
-            const id = target.getAttribute('id')
-            console.log(id)
+          click: () => {
             const getSelectedChatId = this.props.props?.getSelectedChatId as (id: number) => void
-            getSelectedChatId(Number(id))
+            getSelectedChatId(Number(chat.id))
           }
         }
       })
