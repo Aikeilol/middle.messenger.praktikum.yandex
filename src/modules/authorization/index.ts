@@ -6,8 +6,6 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
-import { Store } from '../../store';
-import router from '../../router';
 
 class authorization extends Block {
 
