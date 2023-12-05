@@ -18,7 +18,7 @@ export class accountDataForm extends Block {
       const htmlInput = new Input('input', {
         props: {
           ...input,
-          placeholder: accData?.[input.name as keyof accData] || ''
+          value: accData?.[input.name as keyof accData] || ''
         },
         events: {
           blur: inputValidation
@@ -35,7 +35,7 @@ export class accountDataForm extends Block {
       const htmlInput = new Input('input', {
         props: {
           ...input,
-          placeholder: this.props.props?.[input.name as keyof accData] || ''
+          value: this.props.props?.[input.name as keyof accData] || ''
         },
         events: {
           blur: inputValidation

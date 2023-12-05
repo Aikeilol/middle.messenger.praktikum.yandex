@@ -12,8 +12,9 @@ export class AddChatForm extends Block {
     const input = new Input('input', {
       props: {
         name: 'chat-name',
-        placeholder: "",
-        className: "search-input"
+        value: "",
+        className: "search-input",
+        placeholder: 'Название нового чата'
       },
       events: {
         blur: inputValidation

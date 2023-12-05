@@ -8,7 +8,17 @@ import './style.scss'
 export class ChatMessages extends Block {
 
   renderChatHeader() {
-    const chatHeader = new ChatHeader('div')
+    const chatHeader = new ChatHeader('form', {
+      events: {
+        submit: (e: Event) => {
+          e.preventDefault()
+          const event = e as SubmitEvent
+          const submiterId = event.submitter?.getAttribute('id')
+          const form = event.target as HTMLFormElement
+          console.log(form.querySelector('input')?.value)
+        }
+      }
+    })
 
     return chatHeader.getContent()
   }

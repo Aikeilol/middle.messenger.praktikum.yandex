@@ -13,8 +13,10 @@ export class ChatInput extends Block {
     const input = new Input('input', {
       props: {
         name: 'message',
-        placeholder: "",
-        className: "ChatInput_input"
+        value: "",
+        className: "ChatInput_input",
+        autocomplete: "off",
+        placeholder: 'Введите сообщение'
       },
       events: {
         blur: inputValidation
