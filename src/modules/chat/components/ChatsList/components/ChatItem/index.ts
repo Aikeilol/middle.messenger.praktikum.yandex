@@ -5,7 +5,7 @@ import './style.scss'
 export class ChatItem extends Block {
 
   render(): string {
-    const { avatar, id, title, unread_count, last_message } = this.props.props as chatData
+    const { avatar, id, unread_count, last_message } = this.props.props as chatData
 
     return (
       `<div id=${id} class="chat-card">
