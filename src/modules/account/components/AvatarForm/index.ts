@@ -17,7 +17,8 @@ export class avatarForm extends Block {
   <label class="label">
     <input id='avatar' name='avatar' type="file" />
     <figure class="personal-figure">
-      <img src=https://ya-praktikum.tech/api/v2/resources${avatarUrl} class="personal-avatar" alt="avatar">
+      <img src=https://ya-praktikum.tech/api/v2/resources${avatarUrl} 
+      class="personal-avatar" alt="avatar">
       <figcaption class="personal-figcaption">
         <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
       </figcaption>

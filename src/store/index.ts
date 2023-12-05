@@ -16,7 +16,7 @@ export class Store extends EventBus {
   state: state = {
     accData: null,
   }
-  static __instance: any
+  static __instance: Store
 
   constructor() {
     super()
@@ -40,6 +40,7 @@ export class Store extends EventBus {
 
 export const observer = (Component: typeof Block, subKeys: keys[]) => {
   return class extends Component {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any) {
       super(...args);
       const store = new Store()

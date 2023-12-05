@@ -7,7 +7,7 @@
   "rules": {
     "max-len": [
       2,
-      100
+      150
     ],
     "@typescript-eslint/no-unused-vars": 2
   }

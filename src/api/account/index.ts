@@ -39,7 +39,8 @@ export class UserApi {
   }
 
   saveAvatar(formData: FormData) {
-    return this._HTTPTransport.put('/user/profile/avatar', { data: formData, contentType: '' }) as Promise<changeUserDataResponse>
+    return this._HTTPTransport.put('/user/profile/avatar',
+     { data: formData, contentType: '' }) as Promise<changeUserDataResponse>
   }
 
   changePassword(data: changePassData) {

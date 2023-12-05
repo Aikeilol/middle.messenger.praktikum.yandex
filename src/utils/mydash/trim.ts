@@ -1,7 +1,7 @@
 
 
 export const trim = (string: string, chars: string) => {
-  let str = ' ' + string + ' ';
+  const str = ' ' + string + ' ';
 
   if (str && chars === undefined) {
     return string.trim();

@@ -1,4 +1,4 @@
-type StringIndexed = Record<string, any>;
+type StringIndexed = Record<string, unknown>;
 
 function queryStringify(data: StringIndexed): string | never {
   if (typeof data !== "object") {
@@ -22,11 +22,12 @@ function queryStringify(data: StringIndexed): string | never {
       return `${result}${queryStringify(arrayValue)}${endLine}`;
     }
 
-    if (typeof value === "object") {
-      const objValue = Object.keys(value || {}).reduce<StringIndexed>(
+    if (typeof value === "object" && value !== null) {
+      const typeValue = value as StringIndexed
+      const objValue = Object.keys(typeValue || {}).reduce<StringIndexed>(
         (result, objKey) => ({
           ...result,
-          [`${key}[${objKey}]`]: value[objKey]
+          [`${key}[${objKey}]`]: typeValue[String(objKey)]
         }),
         {}
       );
