@@ -14,6 +14,9 @@ export class MessageBlock extends Block {
     })
 
     const messages = propsMessages.map((message) => {
+      if(message.type !== 'message'){
+        return 
+      }
       const position = new Store().getState('accData')?.id === message.user_id ? 'right' : 'left'
       return (
         ` <p class="messageBlock__message messageBlock__message_${position}">

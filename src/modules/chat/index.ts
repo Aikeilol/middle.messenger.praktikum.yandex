@@ -25,7 +25,7 @@ export class Chat extends Block {
       this.limit = 20
     }
 
-    return new ChatApi().getChats({ offset: this.offset, limit: this.limit }).then(res => {
+    return new ChatApi().getChats({ offset: this.offset, limit: this.limit }).then((res = []) => {
       const currentChatData = this.props.props?.chatData as getChatData
       this.setProps({
         chatData: [...currentChatData || [], ...res]
@@ -54,7 +54,7 @@ export class Chat extends Block {
       })
       return
     }
-    
+
     currentMessages.push(parsedMessage)
 
     this.setProps({
@@ -65,7 +65,7 @@ export class Chat extends Block {
 
   getSelectedChatId(id: number) {
     new ChatApi().getChatToken(id).then((res) => {
-
+      this.props.props!.chatId = id
       if (this.websocket) {
         this.websocket.close()
         this.props.props!.messages = []
@@ -80,7 +80,8 @@ export class Chat extends Block {
     const chatMessages = new ChatMessages('div', {
       props: {
         messages: this.props.props?.messages,
-        sendMessage: this.websocket?.sendMessage.bind(this.websocket)
+        sendMessage: this.websocket?.sendMessage.bind(this.websocket),
+        chatId: this.props.props?.chatId
       }
     })
     return chatMessages.getContent()

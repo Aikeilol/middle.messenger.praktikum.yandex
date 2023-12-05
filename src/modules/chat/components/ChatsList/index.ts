@@ -1,4 +1,5 @@
 import { getChatData } from "../../../../api/chat/types"
+import { onLinkClick } from "../../../../router/onLinkClick"
 import { Block } from "../../../../utils/Block"
 import { AddChatForm } from "./components/AddChatForm"
 import { onAddChat } from "./components/AddChatForm/onAddChat"
@@ -30,13 +31,14 @@ export class ChatsList extends Block {
     const addChatForm = new AddChatForm('form', {
       events: {
         click: (e: Event) => {
+          onLinkClick(e)
           onAddChat(e)?.then((res) => {
             if (!res.reason) {
               const getSingleChat = this.props.props?.getSingleChat as () => void
               getSingleChat()
             }
           })
-        }
+        },
       }
     })
     this.getContent().prepend(addChatForm.getContent())

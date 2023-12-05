@@ -1,3 +1,4 @@
+import { ChatApi } from './../../../../api/chat/index';
 import { Block } from '../../../../utils/Block'
 import { formValidation } from '../../../../utils/validation'
 import { ChatHeader } from './components/ChatHeader'
@@ -15,7 +16,13 @@ export class ChatMessages extends Block {
           const event = e as SubmitEvent
           const submiterId = event.submitter?.getAttribute('id')
           const form = event.target as HTMLFormElement
-          console.log(form.querySelector('input')?.value)
+          const userId = Number(form.querySelector('input')?.value)
+
+          if (submiterId === 'add') {
+            new ChatApi().addUserInChat([userId], Number(this.props.props?.chatId))
+          } else {
+            new ChatApi().deleteUserFromChat([userId], Number(this.props.props?.chatId))
+          }
         }
       }
     })

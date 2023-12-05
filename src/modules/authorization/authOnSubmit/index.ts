@@ -16,11 +16,10 @@ export const authOnSubmit = (event: Event) => {
           return
         }
 
-        message!.textContent = 'Вы успешно зарегистрированы'
         authorizationApi.getAccData().then(res => {
           const store = new Store()
           store.setState('accData', res)
-          router.go('/chat')
+          router.go.bind(router)('/messenger')
         })
       })
       .catch(err => {

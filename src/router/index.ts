@@ -29,12 +29,14 @@ class Route {
   _pathname: string
   _blockClass: typeof Block
   _block: InstanceType<typeof Block> | null
-  _props: props & { rootQuery: string }
-  constructor(pathname: string, view: typeof Block, props: props & { rootQuery: string }) {
+  _props: props & { rootQuery: string, }
+  isPrivat: boolean
+  constructor(pathname: string, view: typeof Block, props: props & { rootQuery: string, isPrivat: boolean }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
     this._props = props;
+    this.isPrivat = props.isPrivat
   }
 
   navigate(pathname: string) {
@@ -84,16 +86,12 @@ class Router {
       this.isAuth = !!store.getState('accData')
     })
 
-    new AuthorizationApi().getAccData().then(res => {
-      store.setState('accData', res)
-    })
-
     this._rootQuery = rootQuery;
     Router.__instance = this;
   }
 
-  use(pathname: string, block: typeof Block, props?: props) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery, props: props });
+  use(pathname: string, isPrivat: boolean, block: typeof Block, props?: props & { privat?: boolean }) {
+    const route = new Route(pathname, block, { rootQuery: this._rootQuery, isPrivat, props: props });
     this.routes.push(route);
     return this
   }
@@ -103,14 +101,28 @@ class Router {
       const target = event.currentTarget as typeof window
       this._onRoute(target.location.pathname);
     };
-
-    this._onRoute(window.location.pathname);
+    new AuthorizationApi().getAccData().then(res => {
+      const store = new Store()
+      store.setState('accData', res)
+      this._onRoute(window.location.pathname);
+    })
   }
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
+    const isAccess = new Store().getState('accData')?.id
     if (!route) {
       return;
+    }
+
+    if (!isAccess && route.isPrivat) {
+      this.go('/sign-in')
+      return
+    }
+
+    if (isAccess && !route.isPrivat) {
+      this.go('/messenger')
+      return
     }
 
     if (this._currentRoute) {
@@ -143,41 +155,41 @@ class Router {
 const router = new Router("#content");
 
 router
-  .use("/", MainPage, {
+  .use("/", false, MainPage, {
     events: {
       click: onLinkClick
     }
   })
-  .use('/messenger', Chat)
-  .use('/sign-up', Registration, {
+  .use('/messenger', true, Chat)
+  .use('/sign-up', false, Registration, {
     events: {
       submit: regOnSubmit,
       click: onLinkClick
     }
   })
-  .use('/sign-in', Authorization, {
+  .use('/sign-in', false, Authorization, {
     events: {
       submit: authOnSubmit,
       click: onLinkClick
     }
   })
-  .use('/settings', Account, {
+  .use('/settings', true, Account, {
     events: {
       click: onLinkClick
     }
   })
-  .use('/change-password', ChangePassword, {
+  .use('/change-password', true, ChangePassword, {
     events: {
       click: onLinkClick,
       submit: changePasOnSubmit,
     }
   })
-  .use('/500', Error500, {
+  .use('/500', false, Error500, {
     events: {
       click: onLinkClick
     }
   })
-  .use('/404', Error400, {
+  .use('/404', false, Error400, {
     events: {
       click: onLinkClick
     }

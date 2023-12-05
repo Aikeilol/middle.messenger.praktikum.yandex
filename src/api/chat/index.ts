@@ -17,4 +17,22 @@ export class ChatApi {
   getChatToken(id: number) {
     return this._HTTPTransport.post(`/chats/token/${id}`) as Promise<{ token: string }>
   }
+
+  addUserInChat(userIds: number[], chatId: number) {
+    return this._HTTPTransport.put(`/chats/users`, {
+      data: {
+        users: userIds,
+        chatId
+      }
+    }) as Promise<{ reason?: string }>
+  }
+
+  deleteUserFromChat(userIds: number[], chatId: number) {
+    return this._HTTPTransport.delete(`/chats/users`, {
+      data: {
+        users: userIds,
+        chatId
+      }
+    }) as Promise<{ reason?: string }>
+  }
 }
