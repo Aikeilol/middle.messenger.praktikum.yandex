@@ -155,7 +155,7 @@ class Router {
 const router = new Router("#content");
 
 router
-  .use("/", false, MainPage, {
+  .use("/", true, MainPage, {
     events: {
       click: onLinkClick
     }
