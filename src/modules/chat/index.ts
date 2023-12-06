@@ -48,21 +48,24 @@ export class Chat extends Block {
   }
 
   setMessages(message: string) {
-    const parsedMessage = JSON.parse(message) as Message | OldMessages
-    const currentMessages = this.props.props?.messages as OldMessages
-    if (Array.isArray(parsedMessage)) {
+    try {
+      const parsedMessage = JSON.parse(message) as Message | OldMessages
+      const currentMessages = this.props.props?.messages as OldMessages
+      if (Array.isArray(parsedMessage)) {
+        this.setProps({
+          messages: [...parsedMessage, ...currentMessages || [],]
+        })
+        return
+      }
+
+      currentMessages.push(parsedMessage)
+
       this.setProps({
-        messages: [...parsedMessage, ...currentMessages || [],]
+        messages: currentMessages
       })
-      return
+    } catch (e) {
+      console.log(e)
     }
-
-    currentMessages.push(parsedMessage)
-
-    this.setProps({
-      messages: currentMessages
-    })
-
   }
 
   getSelectedChatId(id: number) {
