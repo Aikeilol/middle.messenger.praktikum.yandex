@@ -1,11 +1,11 @@
-import { chatData } from '../../../../../../api/chat/types';
+import { ChatData } from '../../../../../../api/chat/types';
 import { Block } from '../../../../../../utils/Block';
 import './style.scss'
 
 export class ChatItem extends Block {
 
   render(): string {
-    const { avatar, id, unread_count, last_message } = this.props.props as chatData
+    const { avatar, id, unread_count, last_message } = this.props.props as ChatData
 
     return (
       `<div id=${id} class="chat-card">

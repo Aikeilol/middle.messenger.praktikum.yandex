@@ -1,6 +1,6 @@
 import { ChatApi } from '../../api/chat';
-import { getChatData } from '../../api/chat/types';
-import { Websocket, message, oldMessages } from '../../api/chat/websocket';
+import { GetChatData } from '../../api/chat/types';
+import { Websocket, Message, OldMessages } from '../../api/chat/websocket';
 import { Store } from '../../store';
 import { Block } from '../../utils/Block';
 import { ChatMessages } from './components/ChatMessages';
@@ -12,7 +12,7 @@ export class Chat extends Block {
   chatMessages!: InstanceType<typeof ChatMessages>
   offset = 0
   limit = 20
-  chatData: getChatData | [] = []
+  chatData: GetChatData | [] = []
   selectedChatId: number = 0
   selectedChatToken = ''
   websocket!: InstanceType<typeof Websocket>
@@ -26,7 +26,7 @@ export class Chat extends Block {
     }
 
     return new ChatApi().getChats({ offset: this.offset, limit: this.limit }).then((res = []) => {
-      const currentChatData = this.props.props?.chatData as getChatData
+      const currentChatData = this.props.props?.chatData as GetChatData
       this.setProps({
         chatData: [...currentChatData || [], ...res]
       })
@@ -36,7 +36,7 @@ export class Chat extends Block {
 
   getSingleChat() {
     return new ChatApi().getChats({ offset: 0, limit: 1 }).then(res => {
-      const chatData = this.props.props?.chatData as getChatData
+      const chatData = this.props.props?.chatData as GetChatData
       chatData.unshift(res?.[0] as never)
       this.setProps({
         chatData: chatData
@@ -46,8 +46,8 @@ export class Chat extends Block {
   }
 
   setMessages(message: string) {
-    const parsedMessage = JSON.parse(message) as message | oldMessages
-    const currentMessages = this.props.props?.messages as oldMessages
+    const parsedMessage = JSON.parse(message) as Message | OldMessages
+    const currentMessages = this.props.props?.messages as OldMessages
     if (Array.isArray(parsedMessage)) {
       this.setProps({
         messages: [...parsedMessage, ...currentMessages || [],]

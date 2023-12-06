@@ -1,13 +1,13 @@
 import { HTTPTransport } from "../../utils/HTTPTransport";
-import { getChatData, getChatsKeys } from "./types";
+import { GetChatData, GetChatsKeys } from "./types";
 
 
 
 export class ChatApi {
   _HTTPTransport = new HTTPTransport()
 
-  getChats(data: getChatsKeys) {
-    return this._HTTPTransport.get('/chats', { data }) as Promise<getChatData>
+  getChats(data: GetChatsKeys) {
+    return this._HTTPTransport.get('/chats', { data }) as Promise<GetChatData>
   }
 
   createChat(data: { title: string }) {

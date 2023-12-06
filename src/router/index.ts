@@ -1,7 +1,7 @@
 import { Block } from "../utils/Block";
 import { Registration } from "../modules/registration";
 import { Chat } from "../modules/chat";
-import { props } from "../utils/Block/types";
+import { Props } from "../utils/Block/types";
 import { MainPage } from "../modules/mainPage";
 import { Account } from "../modules/account";
 import { Error500 } from "../modules/500";
@@ -29,9 +29,9 @@ class Route {
   _pathname: string
   _blockClass: typeof Block
   _block: InstanceType<typeof Block> | null
-  _props: props & { rootQuery: string, }
+  _props: Props & { rootQuery: string, }
   isPrivat: boolean
-  constructor(pathname: string, view: typeof Block, props: props & { rootQuery: string, isPrivat: boolean }) {
+  constructor(pathname: string, view: typeof Block, props: Props & { rootQuery: string, isPrivat: boolean }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -90,7 +90,7 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, isPrivat: boolean, block: typeof Block, props?: props & { privat?: boolean }) {
+  use(pathname: string, isPrivat: boolean, block: typeof Block, props?: Props & { privat?: boolean }) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery, isPrivat, props: props });
     this.routes.push(route);
     return this

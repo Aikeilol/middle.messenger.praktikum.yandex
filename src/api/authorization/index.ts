@@ -1,15 +1,15 @@
 import { HTTPTransport } from "../../utils/HTTPTransport";
 
-export type signInParams = {
+export type SignInParams = {
   login: string,
   password: string,
 }
 
-export type signInResponse = {
+export type SignInResponse = {
   id: number
   reason?: string
 }
-export type accData = {
+export type AccData = {
   id: number,
   first_name: string,
   second_name: string,
@@ -23,14 +23,14 @@ export type accData = {
 export class AuthorizationApi {
   _HTTPTransport = new HTTPTransport()
 
-  signInRequest(signUpParams: signInParams) {
+  signInRequest(signUpParams: SignInParams) {
     return this._HTTPTransport.post(
       '/auth/signin',
-      { data: signUpParams }) as Promise<signInResponse>;
+      { data: signUpParams }) as Promise<SignInResponse>;
   }
 
   getAccData() {
-    return this._HTTPTransport.get('/auth/user') as Promise<accData>
+    return this._HTTPTransport.get('/auth/user') as Promise<AccData>
   }
 
   logout(){

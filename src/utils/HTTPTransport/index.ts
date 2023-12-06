@@ -1,4 +1,4 @@
-import { HTTPMethod, httpOptions, METHODS } from "./types";
+import { HTTPMethod, HttpOptions, METHODS } from "./types";
 
 function queryStringify(data: Record<string, unknown>) {
   if (typeof data !== 'object') {
@@ -29,7 +29,7 @@ export class HTTPTransport {
     return this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
   };
 
-  request = (url: string, options?: httpOptions, timeout: number = 5000) => {
+  request = (url: string, options?: HttpOptions, timeout: number = 5000) => {
     const { headers = {}, method, data, contentType = 'application/json; charset=utf-8' } = options || {};
     url = `https://ya-praktikum.tech/api/v2${url}`
     return new Promise(function (resolve, reject) {

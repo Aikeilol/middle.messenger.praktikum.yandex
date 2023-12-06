@@ -1,6 +1,6 @@
 import { EventBus } from "../../../utils/EventBus"
 
-export type message = {
+export type Message = {
   content: string
   id: number
   time: string
@@ -8,7 +8,7 @@ export type message = {
   user_id: number
 }
 
-export type oldMessages = message[]
+export type OldMessages = Message[]
 
 export class Websocket extends EventBus {
   websocket

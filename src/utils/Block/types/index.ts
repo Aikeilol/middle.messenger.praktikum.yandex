@@ -1,10 +1,10 @@
 
-export type meta = {
+export type Meta = {
   tagName: string
-  props: props
+  props: Props
 }
 
-export type props = {
+export type Props = {
   props?: Record<symbol | string, unknown>
   events?: Record<symbol | string, (event: Event) => void>
 }

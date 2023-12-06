@@ -1,10 +1,10 @@
-import { event, listeners } from './types/index';
+import { Event, Listeners } from './types/index';
 
 export class EventBus {
-  listeners: listeners = {};
+  listeners: Listeners = {};
 
 
-  on(event: event, callback: (...args: unknown[]) => void) {
+  on(event: Event, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -12,7 +12,7 @@ export class EventBus {
     this.listeners[event].push(callback);
   }
 
-  off(event: event, callback: (...args: unknown[]) => void) {
+  off(event: Event, callback: (...args: unknown[]) => void) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
@@ -22,7 +22,7 @@ export class EventBus {
     );
   }
 
-  emit<T>(event: event, ...args: Array<T>) {
+  emit<T>(event: Event, ...args: Array<T>) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

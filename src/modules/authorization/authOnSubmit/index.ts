@@ -1,4 +1,4 @@
-import { AuthorizationApi, signInParams } from '../../../api/authorization';
+import { AuthorizationApi, SignInParams } from '../../../api/authorization';
 import router from '../../../router';
 import { Store } from '../../../store';
 import { formValidation } from './../../../utils/validation/index';
@@ -8,7 +8,7 @@ export const authOnSubmit = (event: Event) => {
   const formValues = formValidation(event)
   if (formValues) {
     const authorizationApi = new AuthorizationApi()
-    authorizationApi.signInRequest(formValues as signInParams)
+    authorizationApi.signInRequest(formValues as SignInParams)
       .then(res => {
         const message = document.querySelector('#onSubmitMessage')
         if (res.reason) {

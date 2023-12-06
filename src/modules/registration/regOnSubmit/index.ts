@@ -1,11 +1,11 @@
-import { RegistrationApi, signUpParams } from '../../../api/registration';
+import { RegistrationApi, SignUpParams } from '../../../api/registration';
 import { formValidation } from './../../../utils/validation/index';
 
 
 export const regOnSubmit = (event: Event) => {
   const formValues = formValidation(event)
   if (formValues) {
-    new RegistrationApi().signUpRequest(formValues as signUpParams)
+    new RegistrationApi().signUpRequest(formValues as SignUpParams)
       .then(res => {
         if (res?.id) {
           const message = document.querySelector('#onSubmitMessage')

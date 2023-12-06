@@ -1,4 +1,4 @@
-import { getChatData } from "../../../../api/chat/types"
+import { GetChatData } from "../../../../api/chat/types"
 import { onLinkClick } from "../../../../router/onLinkClick"
 import { Block } from "../../../../utils/Block"
 import { AddChatForm } from "./components/AddChatForm"
@@ -10,7 +10,7 @@ import './style.scss'
 export class ChatsList extends Block {
 
   renderChats() {
-    const chatData = this.props.props?.chatData as getChatData
+    const chatData = this.props.props?.chatData as GetChatData
     chatData.forEach(chat => {
       const chatItem = new ChatItem('div', {
         props: {

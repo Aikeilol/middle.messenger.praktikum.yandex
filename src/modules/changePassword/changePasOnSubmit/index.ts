@@ -1,4 +1,4 @@
-import { UserApi, changePassData } from '../../../api/account';
+import { UserApi, ChangePassData } from '../../../api/account';
 import { formValidation } from './../../../utils/validation/index';
 
 
@@ -6,7 +6,7 @@ export const changePasOnSubmit = (event: Event) => {
   const formValues = formValidation(event)
   if (formValues) {
     const userApi = new UserApi()
-    userApi.changePassword(formValues as changePassData)
+    userApi.changePassword(formValues as ChangePassData)
       .then(res => {
         const message = document.querySelector('#onSubmitMessage')
         if (res?.reason) {

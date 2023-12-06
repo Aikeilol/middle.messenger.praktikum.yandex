@@ -1,12 +1,12 @@
-export type getChatsKeys = {
+export type GetChatsKeys = {
   offset: number,
   limit: number,
   title?: string
 }
 
-export type getChatData = chatData[]
+export type GetChatData = ChatData[]
 
-export type chatData = {
+export type ChatData = {
   id: number,
   title: string,
   avatar: string,

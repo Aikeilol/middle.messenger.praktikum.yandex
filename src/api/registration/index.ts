@@ -1,6 +1,6 @@
 import { HTTPTransport } from "../../utils/HTTPTransport";
 
-export type signUpParams = {
+export type SignUpParams = {
   first_name: string,
   second_name: string,
   login: string,
@@ -9,7 +9,7 @@ export type signUpParams = {
   phone: string
 }
 
-export type signUpResponse = {
+export type SignUpResponse = {
   id: number
   reason?: string
 }
@@ -17,10 +17,10 @@ export type signUpResponse = {
 export class RegistrationApi {
   _HTTPTransport = new HTTPTransport()
 
-  signUpRequest(signUpParams: signUpParams): Promise<signUpResponse> {
+  signUpRequest(signUpParams: SignUpParams): Promise<SignUpResponse> {
     return this._HTTPTransport.post(
       '/auth/signup',
-      { data: signUpParams }) as Promise<signUpResponse>;
+      { data: signUpParams }) as Promise<SignUpResponse>;
   }
 
 }

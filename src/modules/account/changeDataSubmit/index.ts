@@ -1,5 +1,5 @@
 import { Store } from './../../../store/index';
-import { UserApi, accData } from "../../../api/account"
+import { UserApi, AccData } from "../../../api/account"
 import { formValidation } from "../../../utils/validation"
 
 
@@ -9,7 +9,7 @@ export const changeDataSubmit = (event: Event) => {
 
   if (formValues) {
     const userApi = new UserApi()
-    userApi.changeUserData(formValues as unknown as accData).then(res => {
+    userApi.changeUserData(formValues as unknown as AccData).then(res => {
       new Store().setState('accData', res)
     })
   }
