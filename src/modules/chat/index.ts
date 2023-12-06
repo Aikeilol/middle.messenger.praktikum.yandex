@@ -32,6 +32,7 @@ export class Chat extends Block {
       })
       this.offset = this.offset + this.limit
     })
+      .catch(err => console.log(err))
   }
 
   getSingleChat() {
@@ -43,6 +44,7 @@ export class Chat extends Block {
       })
 
     })
+      .catch(err => console.log(err))
   }
 
   setMessages(message: string) {
@@ -74,6 +76,7 @@ export class Chat extends Block {
       this.websocket = new Websocket(String(new Store().getState('accData')?.id || 0), id, res.token, this.setMessages.bind(this))
 
     })
+      .catch(err => console.log(err))
   }
 
   renderChatMessages() {
@@ -93,7 +96,7 @@ export class Chat extends Block {
         getSingleChat: () => {
           this.getSingleChat().then(() => {
             this.setProps({ chatData: this.props.props?.chatData })
-          })
+          }).catch(err => console.log(err))
         },
         getSelectedChatId: this.getSelectedChatId.bind(this),
         chatData: this.props.props?.chatData || [],
@@ -107,6 +110,7 @@ export class Chat extends Block {
             this.getChats().then(() => {
               this.setProps({ chatData: this.props.props?.chatData })
             })
+              .catch(err => console.log(err))
           }
         }
       }
@@ -123,6 +127,7 @@ export class Chat extends Block {
     this.getChats().then(() => {
       this.setProps({ chatData: this.props.props?.chatData })
     })
+      .catch(err => console.log(err))
 
     content.append(this.renderChatList(), this.renderChatMessages())
   }

@@ -12,5 +12,6 @@ export const onLogout = (e: Event) => {
       new Store().setState('accData', null)
       router.go('/sign-in')
     })
+      .catch(err => console.log(err))
   }
 }

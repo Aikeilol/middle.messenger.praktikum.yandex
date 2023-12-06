@@ -9,4 +9,5 @@ export const onSaveAvatar = (e: Event) => {
   new UserApi().saveAvatar(formData as FormData).then(res => {
     new Store().setState('accData', res)
   })
+    .catch(err => console.log(err))
 }

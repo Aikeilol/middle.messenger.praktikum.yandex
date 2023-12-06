@@ -38,6 +38,7 @@ export class ChatsList extends Block {
               getSingleChat()
             }
           })
+            .catch(err => console.log(err))
         },
       }
     })

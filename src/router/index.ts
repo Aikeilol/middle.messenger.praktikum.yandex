@@ -106,6 +106,7 @@ class Router {
       store.setState('accData', res)
       this._onRoute(window.location.pathname);
     })
+    .catch(err => console.log(err))
   }
 
   _onRoute(pathname: string) {

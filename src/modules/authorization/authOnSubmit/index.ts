@@ -21,10 +21,12 @@ export const authOnSubmit = (event: Event) => {
           store.setState('accData', res)
           router.go.bind(router)('/messenger')
         })
+          .catch(err => console.log(err))
       })
       .catch(err => {
         if (err?.reason) {
           const message = document.querySelector('#onSubmitMessage')
+          console.log(err)
           if (message) {
             message.textContent = err?.response
           }

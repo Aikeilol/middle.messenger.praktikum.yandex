@@ -12,5 +12,6 @@ export const changeDataSubmit = (event: Event) => {
     userApi.changeUserData(formValues as unknown as AccData).then(res => {
       new Store().setState('accData', res)
     })
+      .catch(err => console.log(err))
   }
 }
