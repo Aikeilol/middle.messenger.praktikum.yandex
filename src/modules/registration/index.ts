@@ -5,9 +5,9 @@ import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
 import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
-import { formValidation, inputValidation } from '../../utils/validation';
+import { inputValidation } from '../../utils/validation';
 
-class Registration extends Block {
+export class Registration extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
@@ -32,11 +32,12 @@ class Registration extends Block {
     const buttonResult = handlebarsCompiler(Button(), { text: 'Зарегистрироваться' })
     const link = handlebarsCompiler(Link(), {
       text: 'Уже есть аккаунт ?',
-      href: '/src/pages/authorization/index.html',
+      href: '/sign-in',
     })
 
     return (
       `
+      <div class="registration-container">
       <div class="registration__title">
         Регистрация
       </div>
@@ -45,17 +46,20 @@ class Registration extends Block {
 
         </div>
         <div id="registration__button" class="registration__form__button">
+        <p class='onSubmitMessage' id='onSubmitMessage'></p>
         ${buttonResult + link}
         </div>
-      </form>`
+      </form>
+      </div>`
+
     )
   }
 }
 
-const registration = new Registration('div', {
-  events: {
-    submit: formValidation
-  }
-})
+// const registration = new Registration('div', {
+//   events: {
+//     submit: formValidation
+//   }
+// })
 
-document.querySelector('#container')?.append(registration.getContent())
+// document.querySelector('#content')?.append(registration.getContent())

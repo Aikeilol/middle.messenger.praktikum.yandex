@@ -2,9 +2,8 @@
 import { ErrorsPage } from '../../templates/ErrorsBlock';
 import { Block } from '../../utils/Block';
 import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
+import './style.scss'
 
-
-const container = document.querySelector('#container')
 
 export class Error400 extends Block {
 
@@ -21,6 +20,4 @@ export class Error400 extends Block {
     })
   }
 }
-const error400 = new Error400()
 
-container?.append(error400.getContent())

@@ -1,4 +1,4 @@
-@import '../../../../../../scss/colors.scss';
+@import "../../../../../../scss/colors.scss";
 
 .ChatHeader {
   display: flex;
@@ -6,28 +6,35 @@
   border-bottom: 1px $bordersColor solid;
   width: 100%;
   justify-content: space-between;
-  &__img {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background: $inputsColor;
-  }
-  &__menu {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background: $inputsColor;
+
+  &__form {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 2px;
-    &__dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 100%;
+    gap: 10px;
+
+    &__button {
+      border-radius: 12px;
+      background: $inputsColor;
+      padding: 2px 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 2px;
       background: $buttonsColor;
+      font-size: 12px;
+      cursor: pointer;
+
+      &_remove{
+        background: #ff0000a6;
+      }
     }
+  }
+
+  &_input {
+    background: $inputsColor;
+    width: 100%;
+    border-radius: 30px;
+    padding: 4px;
+    color: #1e1e1e;
   }
 }

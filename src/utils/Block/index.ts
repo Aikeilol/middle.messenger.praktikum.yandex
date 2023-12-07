@@ -1,8 +1,8 @@
 import { EventBus } from './../EventBus/index';
-import { meta, props } from './types/index';
+import { Meta, Props } from './types/index';
 
 
-export abstract class Block {
+export class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -11,21 +11,21 @@ export abstract class Block {
   };
 
   _element: HTMLElement | null = null
-  _meta: meta | null = null
-  props: props
+  _meta: Meta | null = null
+  props: Props
   _isFirstRender: boolean = true
   eventBus: () => InstanceType<typeof EventBus>
 
-  constructor(tagName = "div", props: props = { props: {}, events: {} }) {
+  constructor(tagName = "div", props: Props = { props: {}, events: {} }) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
       props
     };
 
-    this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
+    this.props = this._makePropsProxy(props);
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -39,7 +39,7 @@ export abstract class Block {
   }
 
   _createResources() {
-    const { tagName } = this._meta as meta;
+    const { tagName } = this._meta as Meta;
     this._element = this._createDocumentElement(tagName);
   }
 
@@ -61,26 +61,24 @@ export abstract class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
-    const response = this.componentDidUpdate(oldProps, newProps);
-    if (!response) {
-      return;
-    }
+  _componentDidUpdate() {
     this._removeEvents()
     this._render();
+    this.componentDidUpdate();
   }
 
 
-  componentDidUpdate(oldProps?: unknown, newProps?: unknown) {
-    return { oldProps, newProps }
+  componentDidUpdate() {
+
   }
 
-  setProps = (nextProps: props) => {
+  setProps = (nextProps: Props['props'] = {}) => {
     if (!nextProps) {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    Object.assign(this.props.props as Props || {}, nextProps);
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU)
   };
 
   get element() {
@@ -133,16 +131,16 @@ export abstract class Block {
     return this.element as HTMLElement;
   }
 
-  _makePropsProxy(props: props) {
+  _makePropsProxy(props: Props = {}) {
     const eventBus = this.eventBus
     return new Proxy(props, {
       get(target, prop) {
-        const targetType = target as props['events'] | props['props']
+        const targetType = target as Props['events'] | Props['props']
         const value = targetType?.[prop]
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop, value) {
-        const targetType = target as Required<props>['events'] | Required<props>['props']
+        const targetType = target as Required<Props>['events'] | Required<Props>['props']
         targetType[prop] = value;
         eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
@@ -153,15 +151,15 @@ export abstract class Block {
     });
   }
 
-  _createDocumentElement(tagName: meta['tagName']) {
+  _createDocumentElement(tagName: Meta['tagName']) {
     return document.createElement(tagName);
   }
 
   show() {
-    this.getContent()!.style.display = "block";
+    document.querySelector('#content')?.append(this.getContent())
   }
 
   hide() {
-    this.getContent()!.style.display = "none";
+    this.getContent().remove()
   }
 }

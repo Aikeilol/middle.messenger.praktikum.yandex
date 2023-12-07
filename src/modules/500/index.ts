@@ -2,10 +2,7 @@
 import { ErrorsPage } from '../../templates/ErrorsBlock';
 import { Block } from '../../utils/Block';
 import { handlebarsCompiler } from '../../utils/handelbarsCompiler';
-
-
-const container = document.querySelector('#container')
-
+import './style.scss'
 export class Error500 extends Block {
 
   componentDidMount(): void {
@@ -21,6 +18,4 @@ export class Error500 extends Block {
     })
   }
 }
-const error500 = new Error500()
 
-container?.append(error500.getContent())

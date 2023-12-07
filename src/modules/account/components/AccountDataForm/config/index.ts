@@ -3,53 +3,53 @@
 export const formInputs = [
   {
     name: 'first_name',
-    placeholder: 'Вадим',
+    value: 'Вадим',
     className: 'account-settings_input',
     title: 'Имя'
   },
   {
     name: 'second_name',
-    placeholder: 'Шабиневич',
+    value: 'Шабиневич',
     className: 'account-settings_input',
     title: 'Фамилия'
 
   },
   {
     name: 'display_name',
-    placeholder: 'Aikei',
+    value: 'Aikei',
     className: 'account-settings_input',
     title: 'Имя в чате'
   },
   {
     name: 'login',
-    placeholder: 'Aikei',
+    value: 'Aikei',
     className: 'account-settings_input',
     title: 'Логин'
   },
   {
     name: 'email',
-    placeholder: 'aikei3@yandex.ru',
+    value: 'aikei3@yandex.ru',
     className: 'account-settings_input',
     title: 'Почта'
 
   },
   {
     name: 'phone',
-    placeholder: '+79871868716',
+    value: '+79871868716',
     className: 'account-settings_input',
     title: 'Телефон'
 
   },
-  {
-    name: 'oldPassword',
-    placeholder: '*****',
-    className: 'account-settings_input',
-    title: 'Старый пароль'
-  },
-  {
-    name: 'newPassword',
-    placeholder: 'Введите новый пароль',
-    className: 'account-settings_input',
-    title: 'Новый пароль'
-  },
+  // {
+  //   name: 'oldPassword',
+  //   value: '*****',
+  //   className: 'account-settings_input',
+  //   title: 'Старый пароль'
+  // },
+  // {
+  //   name: 'newPassword',
+  //   value: 'Введите новый пароль',
+  //   className: 'account-settings_input',
+  //   title: 'Новый пароль'
+  // },
 ]

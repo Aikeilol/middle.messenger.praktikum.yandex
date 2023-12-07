@@ -1,0 +1,53 @@
+@import '../../scss/colors.scss';
+
+.change-password {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  background: $mainBgColor;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $mainTextColor;
+    background: rgba(0, 0, 0, 0.16);
+    min-width: 520px;
+    border-radius: 8px;
+    gap: 10px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+
+  &__title {
+    padding: 20px;
+    text-align: center;
+    border-bottom: $bordersColor 1px solid;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  &__form {
+    width: 62%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 20px;
+    
+    &__inputs{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    &__button{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 6px;
+    }
+  }
+}

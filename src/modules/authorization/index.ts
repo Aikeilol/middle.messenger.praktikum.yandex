@@ -1,4 +1,4 @@
-import { formValidation, inputValidation } from './../../utils/validation/index';
+import { inputValidation } from './../../utils/validation/index';
 import { FormInput } from '../../components/FormInput/index';
 import { fields } from './config';
 import { Button } from '../../templates/Button';
@@ -7,7 +7,7 @@ import { Link } from '../../templates/Link';
 import './style.scss'
 import { Block } from '../../utils/Block';
 
-export class Authorization extends Block {
+class authorization extends Block {
 
   componentDidMount(): void {
     const content = this.getContent()
@@ -27,35 +27,33 @@ export class Authorization extends Block {
     })
   }
 
+
   render(): string {
 
     const buttonResult = handlebarsCompiler(Button(), { text: 'Войти' })
 
     const link = handlebarsCompiler(Link(), {
       text: 'Ещё не зарегистрированы ?',
-      href: '/src/pages/registration/index.html',
+      href: '/sign-up',
     })
 
     return (
       `
+      <div class="authorization-container">
       <div class="authorization__title">
-        Регистрация
+        Авторизация
       </div>
       <form id="authorization__form" class="authorization__form" action="">
         <div id="authorization__inputs" class="authorization__form__inputs">
         </div>
         <div id="authorization__button" class="authorization__form__button">
+        <p class='onSubmitMessage' id='onSubmitMessage'></p>
         ${buttonResult + link}
         </div>
-      </form>`
+      </form>
+      </div>`
     )
   }
 }
 
-const authorization = new Authorization('div', {
-  events: {
-    submit: formValidation
-  }
-})
-
-document.querySelector('#container')?.append(authorization.getContent())
+export const Authorization = authorization
